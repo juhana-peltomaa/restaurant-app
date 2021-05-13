@@ -1,5 +1,7 @@
 # Ravintolasovellus
 
+Sovelluksen nykytila löytyy täältä: https://tsoha-restaurants.herokuapp.com
+
 ## Vaatimusmäärittely
 
 ## Sovelluksen tarkoitus
