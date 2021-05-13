@@ -81,7 +81,7 @@ def register():
                       "danger")
 
             if email_exists is not None:
-                flash(f"The email '{email_exists[0]}' is already registered. Please use another one!",
+                flash(f"The email '{email_exists[2]}' is already registered. Please use another one!",
                       "danger")
 
             else:
