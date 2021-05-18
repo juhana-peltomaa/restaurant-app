@@ -3,18 +3,20 @@ from app import app
 from services.user_service import user_service
 
 from flask import Flask, render_template, request, url_for, flash, redirect, session
-from forms import RegistrationForm, LoginForm
+from forms import RegistrationForm, LoginForm, ReviewForm
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
 # tietokanta alustetaan nyt psql < schema.sql
 
 
-restaurants = [{"name": "Skiffer",
+restaurants = [{"id": "1",
+                "name": "Skiffer",
                 "location": "Helsinki",
                 "added_at": "11-5-2021"
                 },
-               {"name": "Fafa's",
+               {"id": "2",
+                "name": "Fafa's",
                 "location": "Espoo",
                 "added_at": "12-5-2021"
                 }
@@ -77,11 +79,11 @@ def register():
             email_exists = user_service.find_email(email)
 
             if user_exists is not None:
-                flash(f"The user '{user_exists}' already exists. Please choose another one!",
+                flash(f"The user '{user_exists.username}' already exists. Please choose another one!",
                       "danger")
 
             if email_exists is not None:
-                flash(f"The email '{email_exists[2]}' is already registered. Please use another one!",
+                flash(f"The email '{email_exists.email}' is already registered. Please use another one!",
                       "danger")
 
             else:
@@ -114,3 +116,39 @@ def logout():
         flash(f"Logout not successful, session was not deleted!",
               "warning")
         return redirect("/login")
+
+# Testataan saadaanko ravintolalle oma sivu, johon voidaan lisätä arvostelulomake
+
+
+@app.route('/review/<int:id>', methods=["GET", "POST"])
+def review(id):
+
+    form = ReviewForm()
+
+    reviews = user_service.all_reviews(id)
+
+    try:
+        if request.method == "POST":
+            if form.validate_on_submit():
+
+                # haetaan käyttäjä, jotta saadaan arvosteluun user_id
+                user = user_service.find_user(session["user"])
+
+                content = form.review.data
+                stars = form.stars.data
+                user_id = user[0]
+
+                # nykyisen ravintolan id
+                restaurant_id = id
+
+                if user_service.create_review(content, user_id, restaurant_id):
+                    flash(f"Review was successfully added", "success")
+                    return render_template("review.html", id=str(id), posts=restaurants, form=form, reviews=reviews)
+
+        else:
+            return render_template("review.html", id=str(id), posts=restaurants, form=form, reviews=reviews)
+
+    except Exception:
+        flash(f"Something went wrong adding a review!",
+              "danger")
+        return render_template("review.html", id=str(id), posts=restaurants, form=form, reviews=reviews)

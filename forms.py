@@ -35,3 +35,12 @@ class LoginForm(FlaskForm):
     remember = BooleanField("Remember my login!")
 
     submit = SubmitField("Login")
+
+
+class ReviewForm(FlaskForm):
+    review = StringField("Review box",
+                         validators=[DataRequired()])
+
+    stars = StringField("Stars")
+
+    submit = SubmitField("Add Review")

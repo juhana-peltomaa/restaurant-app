@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 CREATE_NEW_USER = "INSERT INTO users (username, password, email, admin) VALUES (:username, :password, :email, :admin);"
 
-FIND_USER = "SELECT username FROM users WHERE username=:username;"
+FIND_USER = "SELECT * FROM users WHERE username=:username;"
 
 FIND_EMAIL = "SELECT * FROM users WHERE email=:email;"
 
