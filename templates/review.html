@@ -1,6 +1,5 @@
 {% extends "layout.html"%}
 
-
 {% block content %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
@@ -103,9 +102,16 @@
                 {{ form.stars.label(class="form-control-label") }}
                 {{ form.stars(class="form-control form-control-lg") }}
             </div>
+        {% if session.user %}
             <div class="mb-3 form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
+            {% else %}
+            <div class="col-auto">
+                    <button class="btn btn-secondary" type="button" disabled>Add review</button>
+                    <span class="fa fa-info-circle" aria-hidden="true"> Login to add reviews</span>
+            </div>
+        {% endif %}
         </form> 
       {% endif %}
 
