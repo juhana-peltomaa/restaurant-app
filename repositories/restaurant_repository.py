@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 CREATE_NEW_RESTAURANT = "INSERT INTO restaurants (name, location, user_id, added_at) VALUES (:name, :location, :user_id, NOW());"
 FIND_RESTAURANT = "SELECT * FROM restaurants WHERE name=:name;"
+FIND_ALL_RESTAURANTS = "SELECT * FROM restaurants;"
 
 
 class RestaurantRepository:
@@ -28,6 +29,16 @@ class RestaurantRepository:
 
         if rowcount > 0:
             return restaurant
+
+        return False
+
+    def find_all_restaurants(self):
+        restaurants = self._db.session.execute(FIND_ALL_RESTAURANTS)
+
+        rowcount = restaurants.rowcount
+
+        if rowcount > 0:
+            return restaurants
 
         return False
 

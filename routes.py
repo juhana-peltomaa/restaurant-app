@@ -10,22 +10,24 @@ from werkzeug.security import check_password_hash, generate_password_hash
 # tietokanta alustetaan nyt psql < schema.sql
 
 
-restaurants = [{"id": "1",
-                "name": "Skiffer",
-                "location": "Helsinki",
-                "added_at": "11-5-2021"
-                },
-               {"id": "2",
-                "name": "Fafa's",
-                "location": "Espoo",
-                "added_at": "12-5-2021"
-                }
-               ]
+# restaurants = [{"id": "1",
+#                 "name": "Skiffer",
+#                 "location": "Helsinki",
+#                 "added_at": "11-5-2021"
+#                 },
+#                {"id": "2",
+#                 "name": "Fafa's",
+#                 "location": "Espoo",
+#                 "added_at": "12-5-2021"
+#                 }
+#                ]
 
 
 @app.route('/')
 @app.route('/home', methods=['POST', 'GET'])  # both take us to the home page
 def home():
+
+    restaurants = user_service.find_all_restaurants()
 
     return render_template("home.html", title="Home", posts=restaurants)
 
@@ -46,11 +48,12 @@ def new():
             restaurant_exists = user_service.find_restaurant(name)
 
             if restaurant_exists is False:
-                #flash(f"Resturant {name} already exists", "danger")
+                user_service.add_restaurant(name, location, user_id)
+                flash(f"Resturant {name} successfully added", "success")
                 return render_template("add_restaurants.html", title="Add", form=form)
 
-            if user_service.add_restaurant(name, location, user_id):
-                flash(f"Resturant {name} successfully added", "success")
+            else:
+                flash(f"Resturant {name} already exists", "danger")
                 return render_template("add_restaurants.html", title="Add", form=form)
 
     return render_template("add_restaurants.html", title="Add", form=form)
@@ -153,30 +156,24 @@ def review(id):
     form = ReviewForm()
 
     reviews = user_service.all_reviews(id)
+    restaurants = user_service.find_all_restaurants()
 
-    try:
-        if request.method == "POST":
-            if form.validate_on_submit():
+    if request.method == "POST":
+        if form.validate_on_submit():
 
-                # haetaan käyttäjä, jotta saadaan arvosteluun user_id
-                user = user_service.find_user(session["user"])
+            # haetaan käyttäjä, jotta saadaan arvosteluun user_id
+            user = user_service.find_user(session["user"])
 
-                content = form.review.data
-                stars = form.stars.data
-                user_id = user[0]
+            content = form.review.data
+            stars = form.stars.data
+            user_id = user[0]
 
-                # nykyisen ravintolan id
-                restaurant_id = id
+            # nykyisen ravintolan id
+            restaurant_id = id
 
-                if user_service.create_review(content, user_id, restaurant_id):
-                    reviews = user_service.all_reviews(id)
-                    flash(f"Review was successfully added", "success")
-                    return render_template("review.html", id=str(id), posts=restaurants, form=form, reviews=reviews)
+            if user_service.create_review(content, user_id, restaurant_id):
+                reviews = user_service.all_reviews(id)
+                flash(f"Review was successfully added", "success")
+                return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews)
 
-        else:
-            return render_template("review.html", id=str(id), posts=restaurants, form=form, reviews=reviews)
-
-    except Exception:
-        flash(f"Something went wrong adding a review!",
-              "danger")
-        return render_template("review.html", id=str(id), posts=restaurants, form=form, reviews=reviews)
+    return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews)

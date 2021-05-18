@@ -61,5 +61,10 @@ class UserService:
 
         return False
 
+    def find_all_restaurants(self):
+        restaurants = self._rest_repo.find_all_restaurants()
+
+        return restaurants
+
 
 user_service = UserService()

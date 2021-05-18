@@ -80,65 +80,59 @@
 {% endif %}
 
 <div class="container">
-  {% for restaurant in posts %}
-  
-     {% if id == restaurant.id %}
-    
-    <div class="card mb-3">
-      <div class="card-body">
-        <h5 class="card-title">{{ restaurant.name }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }} - added on {{ restaurant.added_at }}</h6>
-        
-        <form action="/review/{{restaurant.id}}" method="POST">
-            {{ form.hidden_tag() }}
-            <fieldset class ="form-group">
-                <legend class ="boarder-bottom mb-2 pt-2">Restaurant review</legend>
-            </fieldset>
-            <div class="mb-3 form-group">
-                {{ form.review.label(class="form-control-label") }}
-                {{ form.review(class="form-control form-control-lg") }}
-            </div>
-            <div class="mb-3 form-group">
-                {{ form.stars.label(class="form-control-label") }}
-                {{ form.stars(class="form-control form-control-lg") }}
-            </div>
-        {% if session.user %}
-            <div class="mb-3 form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
-            </div>
-            {% else %}
-            <div class="col-auto">
-                    <button class="btn btn-secondary" type="button" disabled>Add review</button>
-                    <span class="fa fa-info-circle" aria-hidden="true"> Login to add reviews</span>
-            </div>
-        {% endif %}
-        </form> 
-      {% endif %}
+{% for restaurant in posts %}
+    {% if id == restaurant.id %}
 
-  {% endfor %}
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    {% for restaurant in posts %}
-        {% if id == restaurant.id %}
-        <h5 class="card-title mb-2">Reviews for {{ restaurant.name }}</h5>
     <div class="card mb-3">
         <div class="card-body">
+            <h5 class="card-title">{{ restaurant.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }} - added on {{ restaurant.added_at }}</h6>
             
+            <form action="/review/{{restaurant.id}}" method="POST">
+                {{ form.hidden_tag() }}
+                <fieldset class ="form-group">
+                    <legend class ="boarder-bottom mb-2 pt-2">Restaurant review</legend>
+                </fieldset>
+                <div class="mb-3 form-group">
+                    {{ form.review.label(class="form-control-label") }}
+                    {{ form.review(class="form-control form-control-lg") }}
+                </div>
+                <div class="mb-3 form-group">
+                    {{ form.stars.label(class="form-control-label") }}
+                    {{ form.stars(class="form-control form-control-lg") }}
+                </div>
+            
+            {% if session.user %}
+                <div class="mb-3 form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+                {% else %}
+                <div class="col-auto">
+                        <button class="btn btn-secondary" type="button" disabled>Add review</button>
+                        <span class="fa fa-info-circle" aria-hidden="true"> Login to add reviews</span>
+                </div>
+            {% endif %}
+            </form> 
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4 class="card-title">Reviews for {{ restaurant.name }}</h5>
+        </div>
+        <div class="card-body">
                 {% if reviews != None %}
                     {% for review in reviews %}
                         <p class="card-text">{{ review[0] }}</p>
                     {% endfor %} 
                 {% else %}
                     <p>No reviews submitted yet!</p>
-                {% endif %}
-                
+                {% endif %}     
         </div>
     </div>
-        {% endif %}
-    {% endfor %}
 </div>
+
+    {% endif %}
+{% endfor %}
+        
 
 {% endblock content %}
