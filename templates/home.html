@@ -13,7 +13,10 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" href="/">Restaurants</a>
+          <a class="nav-link active" href="/">Add new restaurants</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/">Map of restaurants</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -26,8 +29,35 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
+      </ul>
     </div>
+    <!-- näytetään alla olevaa, jos käyttäjä on kirjautnut sisään - Logout toimii nyt myös -->
+
+    {% if session.user %}
+        <div class="justify-content-end">
+          <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                User
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <form method="POST" action="/logout">
+                  <li><input class="dropdown-item" type="submit" value="Logout"></li>
+                </form>
+              </ul>
+            </li>
+        </ul>
+      </div>
+</nav>
+
+<div class="container">
+  <div class="col-md">
+    <p>You are logged in as: <b>{{ session.user }}</b></p>
     
+<!-- Jos käyttäjä ei ole kirjautnut sisään, voi katsoa ravintoloita ja näkee login / reksteröitymislomakkeet -->
+    {% else %}
         <div class="justify-content-end">
           <ul class="navbar-nav mb-2 mb-lg-0">
             <li class="nav-item">
@@ -43,17 +73,14 @@
         </li>
       </ul>
     </div>
-
 </nav>
 
 <div class="container">
   <div class="col-md">
-    {% if session.user %}
-    <p>You are logged in as: <b>{{ session.user }}</b></p>
-    {% else %}
     <p>No user logged in!</b></p>
+{% endif %}
 
-    {% endif %}
+<!-- Listataan kaikille ravintolat -->
 
     <h2>List of restaurants:</h2>  
   </div>
@@ -80,13 +107,6 @@
    {% include "map.html" %}
 </div>
 </div> -->
-
-<div class="container">
-  <form method="POST" action="/logout">
-  <input class="btn btn-primary" type="submit" value="Logout">
-
-  </form>
-</div>
 
 {% endblock content %}
 

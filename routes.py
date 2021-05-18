@@ -142,6 +142,7 @@ def review(id):
                 restaurant_id = id
 
                 if user_service.create_review(content, user_id, restaurant_id):
+                    reviews = user_service.all_reviews(id)
                     flash(f"Review was successfully added", "success")
                     return render_template("review.html", id=str(id), posts=restaurants, form=form, reviews=reviews)
 
