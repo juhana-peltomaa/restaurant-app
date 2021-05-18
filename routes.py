@@ -3,7 +3,7 @@ from app import app
 from services.user_service import user_service
 
 from flask import Flask, render_template, request, url_for, flash, redirect, session
-from forms import RegistrationForm, LoginForm, ReviewForm
+from forms import RegistrationForm, LoginForm, ReviewForm, NewRestaurantForm
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
@@ -26,7 +26,34 @@ restaurants = [{"id": "1",
 @app.route('/')
 @app.route('/home', methods=['POST', 'GET'])  # both take us to the home page
 def home():
+
     return render_template("home.html", title="Home", posts=restaurants)
+
+
+@app.route('/new', methods=['POST', 'GET'])
+def new():
+    form = NewRestaurantForm()
+
+    if request.method == "POST":
+        if form.validate_on_submit():
+
+            user = user_service.find_user(session["user"])
+
+            name = form.name.data
+            location = form.location.data
+            user_id = user[0]
+
+            restaurant_exists = user_service.find_restaurant(name)
+
+            if restaurant_exists is False:
+                #flash(f"Resturant {name} already exists", "danger")
+                return render_template("add_restaurants.html", title="Add", form=form)
+
+            if user_service.add_restaurant(name, location, user_id):
+                flash(f"Resturant {name} successfully added", "success")
+                return render_template("add_restaurants.html", title="Add", form=form)
+
+    return render_template("add_restaurants.html", title="Add", form=form)
 
 
 @app.route('/login', methods=["GET", "POST"])

@@ -38,9 +38,17 @@ class LoginForm(FlaskForm):
 
 
 class ReviewForm(FlaskForm):
-    review = StringField("Review box",
+    review = StringField("Your review",
                          validators=[DataRequired()])
 
     stars = StringField("Stars")
 
     submit = SubmitField("Add Review")
+
+
+class NewRestaurantForm(FlaskForm):
+    name = StringField("Restaurant name",
+                       validators=[DataRequired()])
+    location = StringField("Location",
+                           validators=[DataRequired()])
+    submit = SubmitField("Add new restaurant")

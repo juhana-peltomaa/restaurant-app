@@ -1,13 +1,15 @@
 import routes
 from repositories.review_repository import review_repository as review_repo
 from repositories.user_repository import user_repository as user_repo
+from repositories.restaurant_repository import restaurant_repository as rest_repo
 
 
 class UserService:
 
-    def __init__(self, user_repository=user_repo, review_repository=review_repo):
+    def __init__(self, user_repository=user_repo, review_repository=review_repo, restaurant_repository=rest_repo):
         self._user_repo = user_repository
         self._review_repo = review_repository
+        self._rest_repo = rest_repo
 
     def create_new_user(self, username, password, email, admin):
         self._user_repo.create_new_user(username, password, email, admin)
@@ -43,6 +45,21 @@ class UserService:
         reviews = self._review_repo.all_reviews(id)
 
         return reviews
+
+    def find_restaurant(self, name):
+        restaurant = self._rest_repo.find_restaurant(name)
+
+        return restaurant
+
+    def add_restaurant(self, name, location, user_id):
+
+        new_resturant = self._rest_repo.create_new_restaurant(
+            name, location, user_id)
+
+        if new_resturant is not None:
+            return True
+
+        return False
 
 
 user_service = UserService()
