@@ -75,6 +75,9 @@ def login():
             # tarkistetaan onko salasana oikein
             elif check_password_hash(valid_user["password"], form.password.data):
 
+                # haetaan ravintolat - varmaan olemassa järkevämpi tapa toteuttaa
+                restaurants = user_service.find_all_restaurants()
+
                 # luodaan session olio
                 session["user"] = valid_user["username"]
 
