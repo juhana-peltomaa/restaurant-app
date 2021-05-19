@@ -1,10 +1,9 @@
 from app import app
 # from db import db
-from services.user_service import user_service
-
 from flask import Flask, render_template, request, url_for, flash, redirect, session
 from forms import RegistrationForm, LoginForm, ReviewForm, NewRestaurantForm
 from werkzeug.security import check_password_hash, generate_password_hash
+from services.user_service import user_service
 
 
 # tietokanta alustetaan nyt psql < schema.sql
