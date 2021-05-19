@@ -1,5 +1,5 @@
 from db import db
-from Flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 
 CREATE_NEW_RESTAURANT = "INSERT INTO restaurants (name, location, user_id, added_at) VALUES (:name, :location, :user_id, NOW());"
