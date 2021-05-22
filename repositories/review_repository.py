@@ -2,8 +2,8 @@ from db import db
 from flask_sqlalchemy import SQLAlchemy
 
 
-CREATE_NEW_REVIEW = "INSERT INTO reviews (content, user_id, restaurant_id, sent_at) VALUES (:content, :user_id, :restaurant_id, NOW());"
-FIND_REVIEWS = "SELECT content FROM reviews WHERE restaurant_id=:restaurant_id;"
+CREATE_NEW_REVIEW = "INSERT INTO reviews (title, content, user_id, restaurant_id, sent_at) VALUES (:title, :content, :user_id, :restaurant_id, NOW());"
+FIND_REVIEWS = "SELECT * FROM reviews WHERE restaurant_id=:restaurant_id;"
 
 
 class ReviewRepository:
@@ -11,9 +11,9 @@ class ReviewRepository:
     def __init__(self, database=db):
         self._db = database
 
-    def create_new_review(self, content, user_id, restaurant_id):
+    def create_new_review(self, title, content, user_id, restaurant_id):
         self._db.session.execute(
-            CREATE_NEW_REVIEW, {"content": content, "user_id": user_id, "restaurant_id": restaurant_id})
+            CREATE_NEW_REVIEW, {"title": title, "content": content, "user_id": user_id, "restaurant_id": restaurant_id})
 
         self._db.session.commit()
         return True

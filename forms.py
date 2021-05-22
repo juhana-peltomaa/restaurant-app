@@ -38,6 +38,7 @@ class LoginForm(FlaskForm):
 
 
 class ReviewForm(FlaskForm):
+    title = StringField("Title of review", validators=[DataRequired()])
     review = StringField("Your review",
                          validators=[DataRequired()])
 

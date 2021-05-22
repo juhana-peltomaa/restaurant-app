@@ -2,83 +2,6 @@
 
 {% block content %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="/">Main Page</a>
-
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-      <ul class="navbar-nav mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" href="/new">Add new restaurants</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="/">Map of restaurants</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Link
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-    <!-- näytetään alla olevaa, jos käyttäjä on kirjautnut sisään - Logout toimii nyt myös -->
-
-    {% if session.user %}
-        <div class="justify-content-end">
-          <ul class="navbar-nav mb-2 mb-lg-0">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                User
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <form method="POST" action="/logout">
-                  <li><input class="dropdown-item" type="submit" value="Logout"></li>
-                </form>
-              </ul>
-            </li>
-        </ul>
-      </div>
-</nav>
-
-<div class="container">
-  <div class="col-md">
-    <p>You are logged in as: <b>{{ session.user }}</b></p>
-    
-<!-- Jos käyttäjä ei ole kirjautnut sisään, voi katsoa ravintoloita ja näkee login / reksteröitymislomakkeet -->
-    {% else %}
-        <div class="justify-content-end">
-          <ul class="navbar-nav mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active " href="/login">Login</a>
-            </li>
-          </ul>
-        </div>
-        <ul class="navbar-nav mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active " href="/register">Register</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-</nav>
-
-<div class="container">
-  <div class="col-md">
-    <p>No user logged in!</b></p>
-{% endif %}
-
 <div class="container">
 {% for restaurant in posts %}
     {% if id == restaurant.id %}
@@ -93,6 +16,11 @@
                 <fieldset class ="form-group">
                     <legend class ="boarder-bottom mb-2 pt-2">Restaurant review</legend>
                 </fieldset>
+                <div class="mb-3 form-group">
+                  {{ form.title.label(class="form-control-label") }}
+                  {{ form.title(class="form-control form-control-lg") }}
+              </div>
+
                 <div class="mb-3 form-group">
                     {{ form.review.label(class="form-control-label") }}
                     {{ form.review(class="form-control form-control-lg") }}
@@ -117,12 +45,22 @@
     </div>
     <div class="card mb-3">
         <div class="card-body">
-            <h4 class="card-title">Reviews for {{ restaurant.name }}</h5>
+            <h4 class="card-title">Reviews for {{ restaurant.name }}</h4>
         </div>
         <div class="card-body">
                 {% if reviews != None %}
                     {% for review in reviews %}
-                        <p class="card-text">{{ review[0] }}</p>
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <h5 class="card-title mb-2">{{ review.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"> {{ review.user_id }} - added on {{ review.sent_at }}</h6>
+                        <p class="card-text">{{ review.content }}</p>
+                      </div>                    
+                        <div class="card-body">
+                          <button class="btn btn-primary mb-2" type="button" disabled>Edit review</button>
+                          <button class="btn btn-danger mb-2" type="button" disabled>Delete review</button>
+                        </div>
+                    </div>
                     {% endfor %} 
                 {% else %}
                     <p>No reviews submitted yet!</p>

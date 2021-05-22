@@ -166,6 +166,7 @@ def review(id):
             # haetaan käyttäjä, jotta saadaan arvosteluun user_id
             user = user_service.find_user(session["user"])
 
+            title = form.title.data
             content = form.review.data
             stars = form.stars.data
             user_id = user[0]
@@ -173,7 +174,7 @@ def review(id):
             # nykyisen ravintolan id
             restaurant_id = id
 
-            if user_service.create_review(content, user_id, restaurant_id):
+            if user_service.create_review(title, content, user_id, restaurant_id):
                 reviews = user_service.all_reviews(id)
                 flash(f"Review was successfully added", "success")
                 return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews)
