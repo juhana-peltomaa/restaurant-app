@@ -149,13 +149,6 @@ def review(id):
 
     reviews = user_service.all_reviews(id)
     restaurants = user_service.find_all_restaurants()
-    review_writer = ""
-
-    # if reviews is not None:
-    #     for review in reviews:
-    #         writer = user_service.review_writer(
-    #             review["id"], review["user_id"])
-    #         review_writer = writer
 
     if request.method == "POST":
         if form.validate_on_submit():
@@ -166,26 +159,26 @@ def review(id):
             title = form.title.data
             content = form.review.data
             stars = form.stars.data
+            writer = session["user"]
             user_id = user[0]
 
             # nykyisen ravintolan id
             restaurant_id = id
 
             review = user_service.create_review(
-                title, content, user_id, restaurant_id)
+                title, content, writer, user_id, restaurant_id)
 
             review = review.first()
 
+            # Hakee arvostelut, jotta myös uusin näkyy review.html -sivulla
             if review is not None:
                 reviews = user_service.all_reviews(id)
 
-                # hakee arvostelun kirjoittajan tiedot ja antaa sen html -tiedostolle näytettäväksi arvostelun yhteydessä
-
                 flash(
                     f"Review was successfully added", "success")
-                return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews, writer=review_writer)
+                return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews)
 
-    return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews, writer=review_writer)
+    return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews)
 
 
 # @app.route("/profile")
