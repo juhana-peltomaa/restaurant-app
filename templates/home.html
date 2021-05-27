@@ -18,7 +18,7 @@
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">{{ restaurant.name }}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }} - added on {{ restaurant.added_at }}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }} - added on {{ restaurant.added_at.strftime("%d-%m-%Y") }}</h6>
           
           <p class="card-text">This is some info of the restaurant..</p>
           <a href="/review/{{ restaurant.id }}" class="card-link">Add Review</a>
