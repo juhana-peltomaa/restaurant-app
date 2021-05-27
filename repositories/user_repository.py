@@ -2,7 +2,7 @@ from db import db
 from flask_sqlalchemy import SQLAlchemy
 
 
-CREATE_NEW_USER = "INSERT INTO users (username, password, email, admin) VALUES (:username, :password, :email, :admin);"
+CREATE_NEW_USER = "INSERT INTO users (username, password, email, picture, admin) VALUES (:username, :password, :email, :picture, :admin);"
 
 FIND_USER = "SELECT * FROM users WHERE username=:username;"
 
@@ -14,9 +14,9 @@ class UserRepository:
     def __init__(self, database=db):
         self._db = database
 
-    def create_new_user(self, username, password, email, admin):
+    def create_new_user(self, username, password, email, picture, admin):
         self._db.session.execute(
-            CREATE_NEW_USER, {"username": username, "password": password, "email": email, "admin": admin})
+            CREATE_NEW_USER, {"username": username, "password": password, "email": email, "picture": picture, "admin": admin})
 
         self._db.session.commit()
         return True

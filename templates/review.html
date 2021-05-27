@@ -55,11 +55,13 @@
                         <h5 class="card-title mb-2">{{ review.title }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted"> {{ writer }} - added on {{ review.sent_at }}</h6>
                         <p class="card-text">{{ review.content }}</p>
-                      </div>                    
+                      </div>
+                        {% if review.user_id == session.user_id %}   
                         <div class="card-body">
                           <button class="btn btn-primary mb-2" type="button" disabled>Edit review</button>
                           <button class="btn btn-danger mb-2" type="button" disabled>Delete review</button>
                         </div>
+                        {% endif %} 
                     </div>
                     {% endfor %} 
                 {% else %}

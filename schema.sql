@@ -3,6 +3,7 @@ CREATE TABLE users (
     username TEXT UNIQUE,
     email TEXT,
     password TEXT,
+    picture BYTEA,
     admin BOOL DEFAULT false
 );
 

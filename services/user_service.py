@@ -11,8 +11,9 @@ class UserService:
         self._review_repo = review_repository
         self._rest_repo = rest_repo
 
-    def create_new_user(self, username, password, email, admin):
-        self._user_repo.create_new_user(username, password, email, admin)
+    def create_new_user(self, username, password, email, picture, admin):
+        self._user_repo.create_new_user(
+            username, password, email, picture, admin)
         return True
 
     def find_user(self, username):

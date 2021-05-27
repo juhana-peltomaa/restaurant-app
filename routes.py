@@ -9,19 +9,6 @@ from services.user_service import user_service
 # tietokanta alustetaan nyt psql < schema.sql
 
 
-# restaurants = [{"id": "1",
-#                 "name": "Skiffer",
-#                 "location": "Helsinki",
-#                 "added_at": "11-5-2021"
-#                 },
-#                {"id": "2",
-#                 "name": "Fafa's",
-#                 "location": "Espoo",
-#                 "added_at": "12-5-2021"
-#                 }
-#                ]
-
-
 @app.route('/')
 @app.route('/home', methods=['POST', 'GET'])  # both take us to the home page
 def home():
@@ -80,6 +67,7 @@ def login():
 
                 # luodaan session olio
                 session["user"] = valid_user["username"]
+                session["user_id"] = valid_user["id"]
 
                 flash(f"Successfully logged in!",
                       "success")
@@ -104,6 +92,7 @@ def register():
             username = form.username.data
             password = generate_password_hash(form.password.data)
             email = form.email.data
+            picture = ""
             admin = form.admin.data
 
             # checks if user exists, if not registers. Otherwise displays warning
@@ -120,7 +109,8 @@ def register():
 
             else:
                 # creates new user
-                user_service.create_new_user(username, password, email, admin)
+                user_service.create_new_user(
+                    username, password, email, picture, admin)
 
                 # if validation works, we move to home page
                 flash(f"Account {form.username.data} admin status={form.admin.data} successfully created!",
@@ -159,12 +149,13 @@ def review(id):
 
     reviews = user_service.all_reviews(id)
     restaurants = user_service.find_all_restaurants()
-    review_writers = []
+    review_writer = ""
 
-    for review in reviews:
-        writer = user_service.review_writer(
-            review["id"], review["user_id"])
-        review_writers.append(writer)
+    # if reviews is not None:
+    #     for review in reviews:
+    #         writer = user_service.review_writer(
+    #             review["id"], review["user_id"])
+    #         review_writer = writer
 
     if request.method == "POST":
         if form.validate_on_submit():
@@ -192,6 +183,12 @@ def review(id):
 
                 flash(
                     f"Review was successfully added", "success")
-                return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews, writer=review_writers)
+                return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews, writer=review_writer)
 
-    return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews, writer=review_writers)
+    return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews, writer=review_writer)
+
+
+# @app.route("/profile")
+# def account():
+#     image = url_for("static", filename="profile_picture/" + current_user.picture)
+#     return render_template("user_profile.html")
