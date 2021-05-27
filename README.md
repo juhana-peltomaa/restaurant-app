@@ -8,7 +8,7 @@ Tällä hetkellä sovelluksessa olevat toiminnallisuudet näkyvillä listauksess
 
 ## Sovelluksen tarkoitus
 
-Sovellus esittää tietyn alueen ravintolat kartalla, joista käyttäjä etsiä tietoa sekä lukea arvioita.
+Sovellukseen voidaan lisätä ravintoloita, arvostella niitä sekä tarkastella ravintoloiden tietoja. 
 
 Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä. Ylläpitäjä voi lisätä uusia sekä poistaa olemassa olevia ravintoloita sovelluksesta. Käyttäjät voivat lisätä arvosteluita sovelluksessa olevien ravintoloiden tietoihin.
 
@@ -54,4 +54,4 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
 
 ## Jatkokehitysideoita
 
-_TBA_
+- Ravintoloiden listaaminen kartalla
