@@ -159,6 +159,12 @@ def review(id):
 
     reviews = user_service.all_reviews(id)
     restaurants = user_service.find_all_restaurants()
+    review_writers = []
+
+    for review in reviews:
+        writer = user_service.review_writer(
+            review["id"], review["user_id"])
+        review_writers.append(writer)
 
     if request.method == "POST":
         if form.validate_on_submit():
@@ -174,9 +180,18 @@ def review(id):
             # nykyisen ravintolan id
             restaurant_id = id
 
-            if user_service.create_review(title, content, user_id, restaurant_id):
-                reviews = user_service.all_reviews(id)
-                flash(f"Review was successfully added", "success")
-                return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews)
+            review = user_service.create_review(
+                title, content, user_id, restaurant_id)
 
-    return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews)
+            review = review.first()
+
+            if review is not None:
+                reviews = user_service.all_reviews(id)
+
+                # hakee arvostelun kirjoittajan tiedot ja antaa sen html -tiedostolle näytettäväksi arvostelun yhteydessä
+
+                flash(
+                    f"Review was successfully added", "success")
+                return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews, writer=review_writers)
+
+    return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews, writer=review_writers)

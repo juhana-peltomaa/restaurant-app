@@ -37,9 +37,15 @@ class UserService:
             title, content, user_id, restaurant_id)
 
         if new_review is not None:
-            return True
+            return new_review
 
-        return False
+        return None
+
+    def review_writer(self, review_id, user_id):
+        review_writer = self._review_repo.find_review_writer(
+            review_id, user_id)
+
+        return review_writer
 
     def all_reviews(self, id):
         reviews = self._review_repo.all_reviews(id)
