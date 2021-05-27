@@ -38,7 +38,9 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
   - [x] poistaa lisäämiään arvosteluita
   - [ ] tarkastella kaikkia ravintoloita kartalla / näkymässä 
   - [ ] listata ravintolat paremmuusjärjestykseen (esim. arvosteluiden perusteella)
-  - [ ] tarkastella yksittäisen ravintolan tietoja (kuvaus, aukioloajat, muiden arvostelut)
+  - tarkastella ravintolaan liittyviä tietoja 
+    - [ ] kuvaus/aukioloajat
+    - [x] arvostelut
   - [ ] muokata lisäämiään arvosteluita
   - [ ] etsiä lisättyjä ravintoloita hakusanoilla
 
