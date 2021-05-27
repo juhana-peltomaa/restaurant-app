@@ -153,14 +153,11 @@ def review(id):
     if request.method == "POST":
         if form.validate_on_submit():
 
-            # haetaan käyttäjä, jotta saadaan arvosteluun user_id
-            user = user_service.find_user(session["user"])
-
             title = form.title.data
             content = form.review.data
             stars = form.stars.data
             writer = session["user"]
-            user_id = user[0]
+            user_id = session["user_id"]
 
             # nykyisen ravintolan id
             restaurant_id = id
@@ -175,11 +172,20 @@ def review(id):
                 reviews = user_service.all_reviews(id)
 
                 flash(
-                    f"Review was successfully added", "success")
+                    f"Review was successfully added!", "success")
                 return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews)
 
     return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews)
 
+
+@app.route('/review/<int:id>/delete/<int:restaurant_id>', methods=["GET", "POST"])
+def delete_review(id, restaurant_id):
+
+    delete_review = user_service.delete_review(id, session["user_id"])
+
+    if delete_review:
+        flash(f"Review was successfully deleted!", "success")
+        return redirect(url_for('review', id=restaurant_id))
 
 # @app.route("/profile")
 # def account():

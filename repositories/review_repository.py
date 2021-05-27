@@ -4,7 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 CREATE_NEW_REVIEW = "INSERT INTO reviews (title, content, stars, writer, user_id, restaurant_id, sent_at) VALUES (:title, :content, :stars, :writer, :user_id, :restaurant_id, NOW()) RETURNING id, user_id;"
 FIND_REVIEWS = "SELECT * FROM reviews WHERE restaurant_id=:restaurant_id;"
-FIND_REVIEW_WRITER = "SELECT u.username FROM users u INNER JOIN reviews r ON (r.user_id = :user_id) WHERE r.id=:review_id;"
+FIND_REVIEW_WRITER = "SELECT u.username FROM users u INNER JOIN reviews r ON (r.user_id=:user_id) WHERE r.id=:review_id;"
+DELETE_REVIEW = "DELETE FROM reviews WHERE id=:id AND user_id=:user_id;"
 
 
 class ReviewRepository:
@@ -55,6 +56,19 @@ class ReviewRepository:
             return row
 
         return None
+
+    def delete_review(self, id, user_id):
+        delete_review = self._db.session.execute(
+            DELETE_REVIEW, {"id": id, "user_id": user_id})
+
+        rowcount = delete_review.rowcount
+
+        self._db.session.commit()
+
+        if rowcount > 0:
+            return True
+
+        return False
 
 
 review_repository = ReviewRepository()
