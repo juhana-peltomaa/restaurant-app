@@ -166,7 +166,7 @@ def review(id):
             restaurant_id = id
 
             review = user_service.create_review(
-                title, content, writer, user_id, restaurant_id)
+                title, content, stars, writer, user_id, restaurant_id)
 
             review = review.first()
 

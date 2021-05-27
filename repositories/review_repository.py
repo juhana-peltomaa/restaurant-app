@@ -2,7 +2,7 @@ from db import db
 from flask_sqlalchemy import SQLAlchemy
 
 
-CREATE_NEW_REVIEW = "INSERT INTO reviews (title, content, writer, user_id, restaurant_id, sent_at) VALUES (:title, :content, :writer, :user_id, :restaurant_id, NOW()) RETURNING id, user_id;"
+CREATE_NEW_REVIEW = "INSERT INTO reviews (title, content, stars, writer, user_id, restaurant_id, sent_at) VALUES (:title, :content, :stars, :writer, :user_id, :restaurant_id, NOW()) RETURNING id, user_id;"
 FIND_REVIEWS = "SELECT * FROM reviews WHERE restaurant_id=:restaurant_id;"
 FIND_REVIEW_WRITER = "SELECT u.username FROM users u INNER JOIN reviews r ON (r.user_id = :user_id) WHERE r.id=:review_id;"
 
@@ -12,9 +12,9 @@ class ReviewRepository:
     def __init__(self, database=db):
         self._db = database
 
-    def create_new_review(self, title, content, writer, user_id, restaurant_id):
+    def create_new_review(self, title, content, stars, writer, user_id, restaurant_id):
         new_review = self._db.session.execute(
-            CREATE_NEW_REVIEW, {"title": title, "content": content, "writer": writer, "user_id": user_id, "restaurant_id": restaurant_id})
+            CREATE_NEW_REVIEW, {"title": title, "content": content, "stars": stars, "writer": writer, "user_id": user_id, "restaurant_id": restaurant_id})
 
         self._db.session.commit()
 

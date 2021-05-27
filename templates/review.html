@@ -10,9 +10,9 @@
         <div class="card mb-3">
             <div class="card-body">
                 <h5 class="card-title">{{ restaurant.name }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }} - added on {{ restaurant.added_at }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Location: {{ restaurant.location }} - added on {{ restaurant.added_at.strftime("%d-%m-%Y") }}</h6>
                 
-                <form action="/review/{{restaurant.id}}" method="POST">
+                <form action="/review/{{restaurant.id}}" method="POST" onsubmit="return check(this)">
                     {{ form.hidden_tag() }}
                     <fieldset class ="form-group">
                         <legend class ="boarder-bottom mb-2 pt-2">Restaurant review</legend>
@@ -28,9 +28,17 @@
                     </div>
                     <div class="mb-3 form-group">
                         {{ form.stars.label(class="form-control-label") }}
-                        {{ form.stars(class="form-control form-control-lg") }}
+                        <div></div>
+                        {% for subfield in form.stars %}
+                        <tr class="mb-3">
+                                <td>{{ subfield.label }}</td>
+                                <td>{{ subfield }}</td>
+                        </tr>
+
+                        {% endfor %}
+                        
                     </div>
-                
+
                 {% if session.user %}
                     <div class="mb-3 form-group">
                         {{ form.submit(class="btn btn-outline-info") }}
@@ -53,8 +61,8 @@
                         {% for review in reviews %}
                         <div class="card mb-3">
                         <div class="card-body">
-                            <h5 class="card-title mb-2">{{ review.title }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted"> Writer: {{ review.writer }} - added on {{ review.sent_at.strftime("%d-%m-%Y  %H:%m:%S") }}</h6>
+                            <h5 class="card-title mb-2">{{ review.title }} - {{"☆" * review.stars}} </h5>
+                            <h6 class="card-subtitle mb-2 text-muted"> Reviewed by: {{ review.writer }} - added on {{ review.sent_at.strftime("%d-%m-%Y  %H:%m") }}</h6>
                             <p class="card-text">{{ review.content }}</p>
                         </div>
                             {% if review.user_id == session.user_id %}   
@@ -82,5 +90,16 @@
   </div>
 {% endif %}  
         
+<script>
+    function check(form) {
+        if (form.stars.value < 1) {
+          alert("Star rating missing. Please rate the restaurant!");
+          return false;
+        }
+
+        return true;
+    }
+  </script>
+
 
 {% endblock content %}

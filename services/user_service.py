@@ -32,10 +32,10 @@ class UserService:
         else:
             return None
 
-    def create_review(self, title, content, writer, user_id, restaurant_id):
+    def create_review(self, title, content, stars, writer, user_id, restaurant_id):
 
         new_review = self._review_repo.create_new_review(
-            title, content, writer, user_id, restaurant_id)
+            title, content, stars, writer, user_id, restaurant_id)
 
         if new_review is not None:
             return new_review
