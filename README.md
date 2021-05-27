@@ -1,6 +1,7 @@
 # Ravintolasovellus
 
 Sovelluksen nykytila löytyy täältä: https://tsoha-restaurants.herokuapp.com
+
 Tällä hetkellä sovelluksessa olevat toiminnallisuudet näkyvillä listauksessa alla.
 
 ## Vaatimusmäärittely
