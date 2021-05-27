@@ -35,14 +35,14 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
 - kirjautunut _normaali käyttäjä_ voi:
   - [x] lisätä uusia ravintoloita sovellukseen
   - [x] lisätä ravintolaan liittyviä arvosteluita (sanallinen sekä tähtiä)
-  - [x] poistaa lisäämiään arvosteluita
-  - [ ] tarkastella kaikkia ravintoloita kartalla / näkymässä 
-  - [ ] listata ravintolat paremmuusjärjestykseen (esim. arvosteluiden perusteella)
-  - tarkastella ravintolaan liittyviä tietoja 
+  - [x] poistaa lisäämiään arvosteluita 
+ 
+- tarkastella ravintolaan liittyviä tietoja:
     - [ ] kuvaus/aukioloajat
     - [x] arvostelut
   - [ ] muokata lisäämiään arvosteluita
   - [ ] etsiä lisättyjä ravintoloita hakusanoilla
+  - [ ] listata ravintolat paremmuusjärjestykseen (esim. arvosteluiden perusteella)
 
 - kirjautunut _ylläpitäjä_ voi (ylläolevan lisäksi):
   - [ ] lisätä uusia ravintoloita sovellukseen
@@ -57,3 +57,4 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
 ## Jatkokehitysideoita
 
 - Ravintoloiden listaaminen kartalla
+- Käyttäjän profiilin muokkaaminen / kuvan lisääminen
