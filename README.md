@@ -8,7 +8,7 @@ Tällä hetkellä sovelluksessa olevat toiminnallisuudet näkyvillä listauksess
 
 ## Sovelluksen tarkoitus
 
-Sovellukseen voidaan lisätä ravintoloita, arvostella niitä sekä tarkastella ravintoloiden tietoja. 
+Sovellukseen voidaan lisätä ravintoloita, arvosteluja sekä tarkastella ravintoloiden tietoja. 
 
 Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä. Ylläpitäjä voi lisätä uusia sekä poistaa olemassa olevia ravintoloita sovelluksesta. Käyttäjät voivat lisätä arvosteluita sovelluksessa olevien ravintoloiden tietoihin.
 
