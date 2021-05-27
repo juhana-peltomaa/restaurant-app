@@ -130,6 +130,7 @@ def register():
 def logout():
     try:
         del session["user"]
+        del session["user_id"]
         flash(f"Successfully logged out and deleted session!",
               "success")
         return redirect("/login")
