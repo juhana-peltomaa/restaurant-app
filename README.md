@@ -36,10 +36,10 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
   - [x] lisätä uusia ravintoloita sovellukseen
   - [x] lisätä ravintolaan liittyviä arvosteluita (sanallinen sekä tähtiä)
   - [x] poistaa lisäämiään arvosteluita 
-  - [ ] muokata lisäämiään arvosteluita
+  - [x] muokata lisäämiään arvosteluita
   - tarkastella ravintolaan liittyviä tietoja:
     - [ ] kuvaus/aukioloajat
-    - [x] arvostelut
+    - [x] kaikki arvostelut
   - [ ] etsiä lisättyjä ravintoloita hakusanoilla
   - [ ] listata ravintolat paremmuusjärjestykseen (esim. arvosteluiden perusteella)
 
