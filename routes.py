@@ -195,9 +195,6 @@ def edit(id, restaurant_id):
     review = user_service.find_one_review(id, restaurant_id)
     restaurant = user_service.find_restaurant_id(restaurant_id)
 
-    form.title.default = review["title"]
-    form.review.default = review["content"]
-
     if request.method == "POST":
 
         if form.validate_on_submit():
@@ -208,9 +205,6 @@ def edit(id, restaurant_id):
 
             edit_review = user_service.edit_review(
                 title, content, stars, id, restaurant_id)
-            print(edit_review)
-            print(content)
-            print(stars)
 
             flash(f"Review was successfully updated!", "success")
             return redirect(url_for('review', id=restaurant_id))
