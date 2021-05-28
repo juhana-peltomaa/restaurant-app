@@ -6,6 +6,8 @@ CREATE_NEW_REVIEW = "INSERT INTO reviews (title, content, stars, writer, user_id
 FIND_REVIEWS = "SELECT * FROM reviews WHERE restaurant_id=:restaurant_id;"
 FIND_REVIEW_WRITER = "SELECT u.username FROM users u INNER JOIN reviews r ON (r.user_id=:user_id) WHERE r.id=:review_id;"
 DELETE_REVIEW = "DELETE FROM reviews WHERE id=:id AND user_id=:user_id;"
+FIND_ONE_REVIEW = "SELECT * FROM reviews WHERE id=:id AND restaurant_id=:restaurant_id;"
+UPDATE_REVIEW = "UPDATE reviews SET title=:title, content=:content, stars=:stars WHERE (id=:id AND restaurant_id=:restaurant_id);"
 
 
 class ReviewRepository:
@@ -40,6 +42,19 @@ class ReviewRepository:
 
         return None
 
+    def find_one_review(self, id, restaurant_id):
+        review = self._db.session.execute(
+            FIND_ONE_REVIEW, {"id": id, "restaurant_id": restaurant_id})
+
+        rowcount = review.rowcount
+
+        self._db.session.commit()
+
+        if rowcount > 0:
+            return review.fetchone()
+
+        return None
+
     def find_review_writer(self, review_id, user_id):
         review_writer = self._db.session.execute(FIND_REVIEW_WRITER, {
             "review_id": review_id, "user_id": user_id})
@@ -69,6 +84,13 @@ class ReviewRepository:
             return True
 
         return False
+
+    def edit_review(self, title, content, stars, id, restaurant_id):
+        self._db.session.execute(UPDATE_REVIEW, {
+            "title": title, "content": content, "stars": stars, "id": id, "restaurant_id": restaurant_id})
+        self._db.session.commit()
+
+        return True
 
 
 review_repository = ReviewRepository()

@@ -38,14 +38,25 @@ class LoginForm(FlaskForm):
 
 
 class ReviewForm(FlaskForm):
-    title = StringField("Title of review", validators=[DataRequired()])
+    title = StringField("Review Title", validators=[DataRequired()])
     review = StringField("Your review",
                          validators=[DataRequired()])
 
-    stars = RadioField("Stars", choices=[(
+    stars = RadioField("Rating", choices=[(
         "1", "☆"), ("2", "☆☆"), ("3", "☆☆☆"), ("4", "☆☆☆☆"), ("5", "☆☆☆☆☆")])
 
     submit = SubmitField("Add Review")
+
+
+class ReviewFormUpdateMixin(FlaskForm):
+    title = StringField("New review title", validators=[DataRequired()])
+    review = StringField("New review",
+                         validators=[DataRequired()])
+
+    stars = RadioField("New rating", choices=[(
+        "1", "☆"), ("2", "☆☆"), ("3", "☆☆☆"), ("4", "☆☆☆☆"), ("5", "☆☆☆☆☆")])
+
+    submit = SubmitField("Confirm review edits")
 
 
 class NewRestaurantForm(FlaskForm):

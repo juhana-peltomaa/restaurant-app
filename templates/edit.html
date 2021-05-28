@@ -1,0 +1,76 @@
+{% extends "layout.html"%}
+
+{% block content %}
+    
+    <div class="card mb-3">
+      <div class="card-body">    
+       
+       
+        <form action="{{ url_for('edit', id=id, restaurant_id=restaurant.id) }}" method="POST" onsubmit="return check(this)">
+            {{ form.hidden_tag() }}
+            <fieldset class ="form-group">
+                <legend class ="boarder-bottom mb-2 pt-2">Edit your review of <b>{{ restaurant.name }}</b></legend>
+            </fieldset>
+            <div class="mb-3 form-group">
+                {{ form.title.label(class="form-control-label") }}
+                {{ form.title(class="form-control form-control-lg") }}
+            </div>
+
+            <div class="mb-3 form-group">
+                {{ form.review.label(class="form-control-label") }}
+                {{ form.review(class="form-control form-control-lg") }}
+            </div>
+            <div class="mb-3 form-group">
+                {{ form.stars.label(class="form-control-label") }}
+                <div></div>
+                {% for subfield in form.stars %}
+                <tr class="mb-3">
+                    <td>{{ subfield.label }}</td>
+                    <td>{{ subfield }}</td>
+                </tr>
+
+                {% endfor %}
+            </div>
+            {% if session.user %}
+                <div class="mb-3 form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            {% else %}
+                <div class="col-auto">
+                    <button class="btn btn-secondary" type="button" disabled>Confirm review edits</button>
+                    <span class="fa fa-info-circle" aria-hidden="true"> Login to edit reviews</span>
+                </div>
+            {% endif %}
+
+        </form>
+            <div class="card-text">
+                <a href={{ url_for('review', id=restaurant.id) }}> <button class="btn btn-primary mb-2" type="button">Back to reviews</button></a>
+            </div>
+        
+        </div>
+    
+    <div class="card-body">
+        <h4 class="card-title">Your previous review for {{ restaurant.name }}</h4>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title mb-2">{{ review.title }} - {{"☆" * review.stars}} </h5>
+                    <h6 class="card-subtitle mb-2 text-muted"> Reviewed by: {{ review.writer }} - added on {{ review.sent_at.strftime("%d-%m-%Y  %H:%m") }}</h6>
+                    <p class="card-text">{{ review.content }}</p>
+                </div>
+            </div>
+    </div>
+</div>
+            <script>
+                function check(form) {
+                    if (form.stars.value < 1) {
+                      alert("Star rating missing. Please rate the restaurant!");
+                      return false;
+                    }
+            
+                    return true;
+                }
+              </script>
+
+
+
+{% endblock content %}

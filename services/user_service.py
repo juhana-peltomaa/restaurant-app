@@ -76,5 +76,16 @@ class UserService:
     def delete_review(self, review_id, user_id):
         return self._review_repo.delete_review(review_id, user_id)
 
+    def find_restaurant_id(self, id):
+        restaurant = self._rest_repo.find_restaurant_id(id)
+
+        return restaurant
+
+    def find_one_review(self, review_id, restaurant_id):
+        return self._review_repo.find_one_review(review_id, restaurant_id)
+
+    def edit_review(self, title, content, stars, id, restaurant_id):
+        return self._review_repo.edit_review(title, content, stars, id, restaurant_id)
+
 
 user_service = UserService()

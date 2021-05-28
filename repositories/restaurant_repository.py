@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 CREATE_NEW_RESTAURANT = "INSERT INTO restaurants (name, location, user_id, added_at) VALUES (:name, :location, :user_id, NOW());"
 FIND_RESTAURANT = "SELECT * FROM restaurants WHERE name=:name;"
 FIND_ALL_RESTAURANTS = "SELECT * FROM restaurants;"
+FIND_RESTAURANT_ID = "SELECT * FROM restaurants WHERE id=:id;"
 
 
 class RestaurantRepository:
@@ -39,6 +40,19 @@ class RestaurantRepository:
 
         if rowcount > 0:
             return restaurants
+
+        return False
+
+    def find_restaurant_id(self, id):
+        restaurant = self._db.session.execute(
+            FIND_RESTAURANT_ID, {"id": id})
+
+        rowcount = restaurant.rowcount
+
+        self._db.session.commit()
+
+        if rowcount > 0:
+            return restaurant.fetchone()
 
         return False
 

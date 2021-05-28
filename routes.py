@@ -1,13 +1,12 @@
 from app import app
 # from db import db
 from flask import Flask, render_template, request, url_for, flash, redirect, session
-from forms import RegistrationForm, LoginForm, ReviewForm, NewRestaurantForm
+from forms import RegistrationForm, LoginForm, ReviewForm, NewRestaurantForm, ReviewFormUpdateMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 from services.user_service import user_service
 
 
 # tietokanta alustetaan nyt psql < schema.sql
-
 
 @app.route('/')
 @app.route('/home', methods=['POST', 'GET'])  # both take us to the home page
@@ -187,6 +186,38 @@ def delete_review(id, restaurant_id):
     if delete_review:
         flash(f"Review was successfully deleted!", "success")
         return redirect(url_for('review', id=restaurant_id))
+
+
+@app.route('/review/<int:id>/edit/<int:restaurant_id>', methods=["GET", "POST"])
+def edit(id, restaurant_id):
+    form = ReviewFormUpdateMixin()
+
+    review = user_service.find_one_review(id, restaurant_id)
+    restaurant = user_service.find_restaurant_id(restaurant_id)
+
+    form.title.default = review["title"]
+    form.review.default = review["content"]
+
+    if request.method == "POST":
+
+        if form.validate_on_submit():
+
+            title = form.title.data
+            content = form.review.data
+            stars = form.stars.data
+
+            edit_review = user_service.edit_review(
+                title, content, stars, id, restaurant_id)
+            print(edit_review)
+            print(content)
+            print(stars)
+
+            flash(f"Review was successfully updated!", "success")
+            return redirect(url_for('review', id=restaurant_id))
+
+    print(form.errors)
+    return render_template("edit.html", id=id, restaurant_id=restaurant_id, form=form, review=review, restaurant=restaurant)
+
 
 # @app.route("/profile")
 # def account():
