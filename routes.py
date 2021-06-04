@@ -227,7 +227,6 @@ def edit(id, restaurant_id):
 
 @app.route("/delete/<int:restaurant_id>")
 def delete(restaurant_id):
-
     try:
         if session["admin"] == False:
             flash(f"Access restricted! Only admins can view this page.", "danger")
