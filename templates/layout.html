@@ -35,7 +35,7 @@
             <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand" href="/">Home</a>
-        
+        {% if session.admin %}
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
@@ -44,7 +44,7 @@
             </ul>
             </div>
             <!-- näytetään alla olevaa, jos käyttäjä on kirjautnut sisään - Logout toimii nyt myös -->
-        
+        {% endif %}
             {% if session.user %}
                 <div class="justify-content-end">
                 <ul class="navbar-nav mb-2 mb-lg-0">

@@ -51,21 +51,22 @@ def login():
     if request.method == "POST":
 
         if form.validate_on_submit():
-            # tarkistetaan onko s.posti tietokannassa
+            # checks if email is in database and returns user
             valid_user = user_service.find_email(form.email.data)
 
             if valid_user is None:
                 flash(f"Email {form.email.data} does not exist!", "danger")
                 return render_template("login.html", title="Login", form=form)
 
-            # tarkistetaan onko salasana oikein
+            # checks is password is correct
             elif check_password_hash(valid_user["password"], form.password.data):
 
-                # haetaan ravintolat - varmaan olemassa järkevämpi tapa toteuttaa
+                # retrieves all restaurants from database to display on homepage
                 restaurants = user_service.find_all_restaurants()
 
-                # luodaan session olio
+                # create session objects to allow showing correct elements
                 session["user"] = valid_user["username"]
+                session["admin"] = valid_user["admin"]
                 session["user_id"] = valid_user["id"]
 
                 flash(f"Successfully logged in!",
@@ -112,7 +113,7 @@ def register():
                     username, password, email, picture, admin)
 
                 # if validation works, we move to home page
-                flash(f"Account {form.username.data} admin status={form.admin.data} successfully created!",
+                flash(f"Account {form.username.data} successfully created!",
                       "success")
 
                 return redirect(url_for("login"))
@@ -130,6 +131,8 @@ def logout():
     try:
         del session["user"]
         del session["user_id"]
+        del session["admin"]
+
         flash(f"Successfully logged out and deleted session!",
               "success")
         return redirect("/login")
