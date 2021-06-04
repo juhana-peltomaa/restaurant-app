@@ -35,13 +35,13 @@ def new():
             if restaurant_exists is False:
                 user_service.add_restaurant(name, location, user_id)
                 flash(f"Resturant {name} successfully added", "success")
-                return render_template("add_restaurants.html", title="Add", form=form)
+                return redirect(url_for("home"))
 
             else:
                 flash(f"Resturant {name} already exists", "danger")
-                return render_template("add_restaurants.html", title="Add", form=form)
+                return render_template("add_restaurants.html", title="New restaurant", form=form)
 
-    return render_template("add_restaurants.html", title="Add", form=form)
+    return render_template("add_restaurants.html", title="New restaurant", form=form)
 
 
 @app.route('/login', methods=["GET", "POST"])
