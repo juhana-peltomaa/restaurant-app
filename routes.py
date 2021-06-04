@@ -20,7 +20,11 @@ def home():
 
 @app.route('/new', methods=['POST', 'GET'])
 def new():
-    if session["admin"] == False:
+    try:
+        if session["admin"] == False:
+            flash(f"Access restricted! Only admins can view this page.", "danger")
+            return redirect(url_for("home"))
+    except KeyError:
         flash(f"Access restricted! Only admins can view this page.", "danger")
         return redirect(url_for("home"))
 
@@ -223,6 +227,15 @@ def edit(id, restaurant_id):
 
 @app.route("/delete/<int:restaurant_id>")
 def delete(restaurant_id):
+
+    try:
+        if session["admin"] == False:
+            flash(f"Access restricted! Only admins can view this page.", "danger")
+            return redirect(url_for("home"))
+    except KeyError:
+        flash(f"Access restricted! Only admins can view this page.", "danger")
+        return redirect(url_for("home"))
+
     delete_restaurant = user_service.delete_restaurant(restaurant_id)
 
     if delete_restaurant is True:
@@ -231,6 +244,7 @@ def delete(restaurant_id):
 
     flash(f"Deleteing restaurant failed!", "danger")
     return redirect(url_for('home'))
+
 
 # @app.route("/profile")
 # def account():
