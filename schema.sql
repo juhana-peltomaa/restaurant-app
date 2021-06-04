@@ -22,6 +22,6 @@ CREATE TABLE reviews (
     stars INTEGER,
     writer TEXT,
     user_id INTEGER REFERENCES users,
-    restaurant_id INTEGER REFERENCES restaurants,
+    restaurant_id INTEGER REFERENCES restaurants ON DELETE CASCADE,
     sent_at TIMESTAMP
 );

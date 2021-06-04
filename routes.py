@@ -8,6 +8,7 @@ from services.user_service import user_service
 
 # tietokanta alustetaan nyt psql < schema.sql
 
+
 @app.route('/')
 @app.route('/home', methods=['POST', 'GET'])  # both take us to the home page
 def home():
@@ -19,6 +20,10 @@ def home():
 
 @app.route('/new', methods=['POST', 'GET'])
 def new():
+    if session["admin"] == False:
+        flash(f"Access restricted! Only admins can view this page.", "danger")
+        return redirect(url_for("home"))
+
     form = NewRestaurantForm()
 
     if request.method == "POST":
@@ -215,6 +220,17 @@ def edit(id, restaurant_id):
     print(form.errors)
     return render_template("edit.html", id=id, restaurant_id=restaurant_id, form=form, review=review, restaurant=restaurant)
 
+
+@app.route("/delete/<int:restaurant_id>")
+def delete(restaurant_id):
+    delete_restaurant = user_service.delete_restaurant(restaurant_id)
+
+    if delete_restaurant is True:
+        flash(f"Restaurant successfully deleted!", "success")
+        return redirect(url_for('home'))
+
+    flash(f"Deleteing restaurant failed!", "danger")
+    return redirect(url_for('home'))
 
 # @app.route("/profile")
 # def account():
