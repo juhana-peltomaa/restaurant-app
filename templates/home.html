@@ -30,7 +30,7 @@
           {% endif %}
           <p class="card-text">{{ restaurant.info }}</p>
           {% if restaurant.website != "" %}
-            <p class="card-text">Website: <a href={{restaurant.website}}>{{restaurant.website}}</a></p>
+            <p class="card-text">Website: <a href="http://{{restaurant.website}}" target="_blank">{{restaurant.website}}</a></p>
           {% endif %}
         </div>
 
