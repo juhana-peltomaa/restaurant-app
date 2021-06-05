@@ -9,6 +9,8 @@ DELETE_REVIEW = "DELETE FROM reviews WHERE id=:id AND user_id=:user_id;"
 FIND_ONE_REVIEW = "SELECT * FROM reviews WHERE id=:id AND restaurant_id=:restaurant_id;"
 UPDATE_REVIEW = "UPDATE reviews SET title=:title, content=:content, stars=:stars WHERE (id=:id AND restaurant_id=:restaurant_id);"
 
+AVERAGE_REVIEW = "SELECT ROUND(AVG(stars)::numeric, 1) FROM reviews WHERE restaurant_id=:restaurant_id;"
+
 
 class ReviewRepository:
 
@@ -91,6 +93,18 @@ class ReviewRepository:
         self._db.session.commit()
 
         return True
+
+    def average_reviews(self, restaurant_id):
+
+        try:
+            average_review = self._db.session.execute(
+                AVERAGE_REVIEW, {"restaurant_id": restaurant_id})
+            self._db.session.commit()
+
+        except Exception:
+            return "Something went wrong"
+
+        return average_review.fetchone()
 
 
 review_repository = ReviewRepository()

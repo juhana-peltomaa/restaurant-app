@@ -90,5 +90,22 @@ class UserService:
     def delete_restaurant(self, restaurant_id):
         return self._rest_repo.delete_restaurant(restaurant_id)
 
+    def average_reviews(self, restaurants):
+
+        average_reviews = []
+
+        for restaurant in restaurants:
+
+            review = self._review_repo.average_reviews(
+                restaurant[0])
+
+            if review[0] == None:
+                average_reviews.append(None)
+
+            else:
+                average_reviews.append(float(review[0]))
+
+        return average_reviews
+
 
 user_service = UserService()

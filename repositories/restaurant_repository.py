@@ -40,7 +40,7 @@ class RestaurantRepository:
         row_count = restaurants.rowcount
 
         if row_count > 0:
-            return restaurants
+            return restaurants.fetchall()
 
         return False
 

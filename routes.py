@@ -10,15 +10,20 @@ from services.user_service import user_service
 
 
 @app.route('/')
-@app.route('/home', methods=['POST', 'GET'])  # both take us to the home page
+@app.route('/home')  # both take us to the home page
 def home():
 
     restaurants = user_service.find_all_restaurants()
+    average_reviews = user_service.average_reviews(restaurants)
+    print(average_reviews)
 
-    return render_template("home.html", title="Home", posts=restaurants)
+    try:
+        return render_template("home.html", title="Home", posts=restaurants, reviews=average_reviews)
+    except Exception:
+        return render_template("home.html", title="Home", posts=restaurants)
 
 
-@app.route('/new', methods=['POST', 'GET'])
+@ app.route('/new', methods=['POST', 'GET'])
 def new():
     try:
         if session["admin"] == False:
@@ -53,7 +58,7 @@ def new():
     return render_template("add_restaurants.html", title="New restaurant", form=form)
 
 
-@app.route('/login', methods=["GET", "POST"])
+@ app.route('/login', methods=["GET", "POST"])
 def login():
     form = LoginForm()
 
@@ -70,9 +75,6 @@ def login():
             # checks is password is correct
             elif check_password_hash(valid_user["password"], form.password.data):
 
-                # retrieves all restaurants from database to display on homepage
-                restaurants = user_service.find_all_restaurants()
-
                 # create session objects to allow showing correct elements
                 session["user"] = valid_user["username"]
                 session["admin"] = valid_user["admin"]
@@ -80,7 +82,7 @@ def login():
 
                 flash(f"Successfully logged in!",
                       "success")
-                return render_template("home.html", title="Home Page", posts=restaurants)
+                return redirect(url_for('home'))
 
             flash(f"Invalid password!", "danger")
 
@@ -91,7 +93,7 @@ def login():
     return render_template("login.html", title="Login", form=form)
 
 
-@app.route('/register', methods=["GET", "POST"])
+@ app.route('/register', methods=["GET", "POST"])
 def register():
     form = RegistrationForm()
 
@@ -135,7 +137,7 @@ def register():
     return render_template("register.html", title="Register", form=form)
 
 
-@app.route('/logout', methods=["POST"])
+@ app.route('/logout', methods=["POST"])
 def logout():
     try:
         del session["user"]
@@ -151,10 +153,8 @@ def logout():
               "warning")
         return redirect("/login")
 
-# Testataan saadaanko ravintolalle oma sivu, johon voidaan lisätä arvostelulomake
 
-
-@app.route('/review/<int:id>', methods=["GET", "POST"])
+@ app.route('/review/<int:id>', methods=["GET", "POST"])
 def review(id):
 
     form = ReviewForm()
@@ -190,7 +190,7 @@ def review(id):
     return render_template("review.html", id=id, posts=restaurants, form=form, reviews=reviews)
 
 
-@app.route('/review/<int:id>/delete/<int:restaurant_id>', methods=["GET", "POST"])
+@ app.route('/review/<int:id>/delete/<int:restaurant_id>', methods=["GET", "POST"])
 def delete_review(id, restaurant_id):
 
     delete_review = user_service.delete_review(id, session["user_id"])
@@ -200,7 +200,7 @@ def delete_review(id, restaurant_id):
         return redirect(url_for('review', id=restaurant_id))
 
 
-@app.route('/review/<int:id>/edit/<int:restaurant_id>', methods=["GET", "POST"])
+@ app.route('/review/<int:id>/edit/<int:restaurant_id>', methods=["GET", "POST"])
 def edit(id, restaurant_id):
     form = ReviewFormUpdateMixin()
 
@@ -225,7 +225,7 @@ def edit(id, restaurant_id):
     return render_template("edit.html", id=id, restaurant_id=restaurant_id, form=form, review=review, restaurant=restaurant)
 
 
-@app.route("/delete/<int:restaurant_id>")
+@ app.route("/delete/<int:restaurant_id>")
 def delete(restaurant_id):
     try:
         if session["admin"] == False:
