@@ -17,6 +17,14 @@
                 {{ form.location.label(class="form-control-label") }}
                 {{ form.location(class="form-control form-control-lg") }}
             </div>
+            <div class="mb-3 form-group">
+                {{ form.info.label(class="form-control-label") }}
+                {{ form.info(class="form-control form-control-lg") }}
+            </div>
+            <div class="mb-3 form-group">
+                {{ form.website.label(class="form-control-label") }}
+                {{ form.website(class="form-control form-control-lg") }}
+            </div>
         {% if session.user %}
             <div class="mb-3 form-group">
                 {{ form.submit(class="btn btn-outline-info") }}

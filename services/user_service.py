@@ -58,10 +58,10 @@ class UserService:
 
         return restaurant
 
-    def add_restaurant(self, name, location, user_id):
+    def add_restaurant(self, name, location, info, website, user_id):
 
         new_resturant = self._rest_repo.create_new_restaurant(
-            name, location, user_id)
+            name, location, info, website, user_id)
 
         if new_resturant is not None:
             return True
@@ -106,6 +106,9 @@ class UserService:
                 average_reviews.append(float(review[0]))
 
         return average_reviews
+
+    def update_restaurant(self, name, location, info, website, restaurant_id):
+        return self._rest_repo.update_restaurant(name, location, info, website, restaurant_id)
 
 
 user_service = UserService()

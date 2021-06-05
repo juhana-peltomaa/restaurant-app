@@ -1,0 +1,56 @@
+{% extends "layout.html"%}
+
+{% block content %}
+    
+    <div class="card mb-3">
+      <div class="card-body">    
+       
+       
+        <form action="{{ url_for('update_restaurant', restaurant_id=restaurant.id) }}" method="POST" onsubmit="return check(this)">
+            {{ form.hidden_tag() }}
+            <fieldset class ="form-group">
+                <legend class ="boarder-bottom mb-2 pt-2">Update information of <b>{{ restaurant.name }}</b></legend>
+            </fieldset>
+            <div class="mb-3 form-group">
+                {{ form.name.label(class="form-control-label") }}
+                {{ form.name(class="form-control form-control-lg") }}
+            </div>
+            <div class="mb-3 form-group">
+                {{ form.location.label(class="form-control-label") }}
+                {{ form.location(class="form-control form-control-lg") }}
+            </div>
+            <div class="mb-3 form-group">
+                {{ form.info.label(class="form-control-label") }}
+                {{ form.info(class="form-control form-control-lg") }}
+            </div>
+            <div class="mb-3 form-group">
+                {{ form.website.label(class="form-control-label") }}
+                {{ form.website(class="form-control form-control-lg") }}
+            </div>
+
+                <div class="mb-3 form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+        </form>
+            <div class="card-text">
+                <a href={{ url_for('home') }}> <button class="btn btn-primary mb-2" type="button">Back to home page</button></a>
+            </div>
+        
+        </div>
+
+    
+    <div class="card-body">
+        <h4 class="card-title">Current information for {{ restaurant.name }}</h4>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title mb-2">{{ restaurant.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"> {{ restaurant.location }} - added on {{ restaurant.added_at.strftime("%d-%m-%Y  %H:%m") }}</h6>
+                    <p class="card-text">{{ restaurant.info }}</p>
+                    <p class="card-text">{{ restaurant.website }}</p>
+                </div>
+            </div>
+    </div>
+</div>
+
+
+{% endblock content %}

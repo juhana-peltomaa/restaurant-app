@@ -28,13 +28,17 @@
           <h6 class="card-title"> Rating: {{ average_review[loop.index0] }} out of 5 ☆'s</h6>
           <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }} - added on {{ restaurant.added_at.strftime("%d-%m-%Y") }}</h6>
           {% endif %}
-          <p class="card-text">This is some info of the restaurant..</p>
+          <p class="card-text">{{ restaurant.info }}</p>
+          {% if restaurant.website != "" %}
+            <p class="card-text">Website: <a href={{restaurant.website}}>{{restaurant.website}}</a></p>
+          {% endif %}
         </div>
 
             <div class="card-body">
-                <a href={{ url_for('review', id=restaurant.id) }}> <button class="btn btn-primary mb-2" type="button">Add Review</button></a>
+                <a href={{ url_for('review', id=restaurant.id) }}> <button class="btn btn-primary mb-2" type="button">View / Add Reviews</button></a>
                 <a href="/"> <button class="btn btn-secondary mb-2" type="button">View Menu</button></a>
                 {% if session.admin == True %} 
+                  <a href={{ url_for('update_restaurant', restaurant_id=restaurant.id)}}> <button class="btn btn-info mb-2" type="button">Update Restaurant</button></a>
                   <a href={{ url_for('delete', restaurant_id=restaurant.id)}}> <button class="btn btn-danger mb-2" type="button">Delete Restaurant</button></a>
                 {% endif %} 
             </div>

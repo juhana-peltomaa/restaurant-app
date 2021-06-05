@@ -2,11 +2,12 @@ from db import db
 from flask_sqlalchemy import SQLAlchemy
 
 
-CREATE_NEW_RESTAURANT = "INSERT INTO restaurants (name, location, user_id, added_at) VALUES (:name, :location, :user_id, NOW());"
+CREATE_NEW_RESTAURANT = "INSERT INTO restaurants (name, location, info, website, user_id, added_at) VALUES (:name, :location, :info, :website, :user_id, NOW());"
 FIND_RESTAURANT = "SELECT * FROM restaurants WHERE name=:name;"
 FIND_ALL_RESTAURANTS = "SELECT * FROM restaurants;"
 FIND_RESTAURANT_ID = "SELECT * FROM restaurants WHERE id=:id;"
 DELETE_RESTAURANT = "DELETE FROM restaurants WHERE id=:id;"
+UPDATE_RESTAURANT = "UPDATE restaurants SET name=:name, location=:location, info=:info, website=:website WHERE (id=:id);"
 
 
 class RestaurantRepository:
@@ -14,9 +15,9 @@ class RestaurantRepository:
     def __init__(self, database=db):
         self._db = database
 
-    def create_new_restaurant(self, name, location, user_id):
+    def create_new_restaurant(self, name, location, info, website, user_id):
         self._db.session.execute(
-            CREATE_NEW_RESTAURANT, {"name": name, "location": location, "user_id": user_id})
+            CREATE_NEW_RESTAURANT, {"name": name, "location": location, "info": info, "website": website, "user_id": user_id})
 
         self._db.session.commit()
         return True
@@ -67,6 +68,15 @@ class RestaurantRepository:
             return False
         except Exception:
             return True
+
+    def update_restaurant(self, name, location, info, website, id):
+        update_restaurant = self._db.session.execute(UPDATE_RESTAURANT, {
+            "name": name, "location": location, "info": info, "website": website, "id": id})
+        self._db.session.commit()
+
+        print(update_restaurant)
+
+        return True
 
 
 restaurant_repository = RestaurantRepository()

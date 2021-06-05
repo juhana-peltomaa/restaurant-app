@@ -64,4 +64,18 @@ class NewRestaurantForm(FlaskForm):
                        validators=[DataRequired()])
     location = StringField("Location",
                            validators=[DataRequired()])
+    info = StringField("Info",
+                       validators=[DataRequired()])
+    website = StringField("Website")
     submit = SubmitField("Add new restaurant")
+
+
+class UpdateRestaurantForm(FlaskForm):
+    name = StringField("Update restaurant name",
+                       validators=[DataRequired()])
+    location = StringField("Update location",
+                           validators=[DataRequired()])
+    info = StringField("Update info",
+                       validators=[DataRequired()])
+    website = StringField("Update website")
+    submit = SubmitField("Confirm updates")

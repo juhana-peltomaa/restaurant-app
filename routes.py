@@ -1,7 +1,7 @@
 from app import app
 # from db import db
 from flask import Flask, render_template, request, url_for, flash, redirect, session
-from forms import RegistrationForm, LoginForm, ReviewForm, NewRestaurantForm, ReviewFormUpdateMixin
+from forms import RegistrationForm, LoginForm, ReviewForm, NewRestaurantForm, ReviewFormUpdateMixin, UpdateRestaurantForm
 from werkzeug.security import check_password_hash, generate_password_hash
 from services.user_service import user_service
 
@@ -14,13 +14,13 @@ from services.user_service import user_service
 def home():
 
     restaurants = user_service.find_all_restaurants()
-    average_reviews = user_service.average_reviews(restaurants)
-    print(average_reviews)
 
-    try:
+    if restaurants:
+        average_reviews = user_service.average_reviews(restaurants)
+
         return render_template("home.html", title="Home", posts=restaurants, reviews=average_reviews)
-    except Exception:
-        return render_template("home.html", title="Home", posts=restaurants)
+
+    return render_template("home.html", title="Home", posts=restaurants, reviews=[])
 
 
 @ app.route('/new', methods=['POST', 'GET'])
@@ -42,12 +42,15 @@ def new():
 
             name = form.name.data
             location = form.location.data
+            info = form.info.data
+            website = form.website.data
             user_id = user[0]
 
             restaurant_exists = user_service.find_restaurant(name)
 
             if restaurant_exists is False:
-                user_service.add_restaurant(name, location, user_id)
+                user_service.add_restaurant(
+                    name, location, info, website, user_id)
                 flash(f"Resturant {name} successfully added", "success")
                 return redirect(url_for("home"))
 
@@ -215,13 +218,12 @@ def edit(id, restaurant_id):
             content = form.review.data
             stars = form.stars.data
 
-            edit_review = user_service.edit_review(
+            user_service.edit_review(
                 title, content, stars, id, restaurant_id)
 
             flash(f"Review was successfully updated!", "success")
             return redirect(url_for('review', id=restaurant_id))
 
-    print(form.errors)
     return render_template("edit.html", id=id, restaurant_id=restaurant_id, form=form, review=review, restaurant=restaurant)
 
 
@@ -244,6 +246,41 @@ def delete(restaurant_id):
     flash(f"Deleteing restaurant failed!", "danger")
     return redirect(url_for('home'))
 
+
+@app.route("/update/<int:restaurant_id>", methods=["GET", "POST"])
+def update_restaurant(restaurant_id):
+
+    try:
+        if session["admin"] == False:
+            flash(f"Access restricted! Only admins can view this page.", "danger")
+            return redirect(url_for("home"))
+    except KeyError:
+        flash(f"Access restricted! Only admins can view this page.", "danger")
+        return redirect(url_for("home"))
+
+    form = UpdateRestaurantForm()
+
+    restaurant = user_service.find_restaurant_id(restaurant_id)
+
+    if request.method == "POST":
+
+        if form.validate_on_submit():
+            name = form.name.data
+            location = form.location.data
+            info = form.info.data
+            website = form.website.data
+
+            update_restaurant = user_service.update_restaurant(
+                name, location, info, website, restaurant_id)
+
+            if update_restaurant == True:
+                flash(f"Restaurant information was successfully updated!", "success")
+                return redirect(url_for('home'))
+            else:
+                flash(f"Restaurant information was successfully updated!", "success")
+                return redirect(url_for('update_restaurant', restaurant_id=restaurant_id))
+
+    return render_template("update.html", id=id, restaurant_id=restaurant_id, form=form, review=review, restaurant=restaurant)
 
 # @app.route("/profile")
 # def account():
