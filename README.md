@@ -27,7 +27,7 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
   - [x] jos annetut tiedot eivät ole uniikkeja, sovellus ilmoittaa tästä käyttäjälle
 
 - käyttäjä voi kirjautua järjestelmään kirjautumislomakkeella, jos:
-  - [x] lomakkeelle syötetty käyttäjätunnus sekä salasana löytyvät tietokannasta 
+  - [x] lomakkeelle syötetty sähköposti sekä salasana löytyvät tietokannasta 
   - [x] jos kirjautuminen epäonnistuu, sovellus ilmoittaa tästä käyttäjälle 
 
 - kirjatumaton käyttäjä voi: 
@@ -41,7 +41,7 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
   - [x] poistaa lisäämiään arvosteluita 
   - [x] muokata lisäämiään arvosteluita
   - tarkastella ravintolaan liittyviä tietoja:
-    - [ ] kuvaus/aukioloajat
+    - [x] kuvausta
     - [x] kaikki arvostelut
   - [ ] etsiä lisättyjä ravintoloita hakusanoilla
   - [ ] listata ravintolat paremmuusjärjestykseen (esim. arvosteluiden perusteella)
@@ -49,7 +49,7 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
 - kirjautunut _ylläpitäjä_ voi (ylläolevan lisäksi):
   - [x] lisätä uusia ravintoloita sovellukseen
   - [x] poistaa olemassa olevia ravintoloita sovelluksesta
-  - [ ] muokata ravintoloiden tietoja
+  - [x] muokata lisättyjen ravintoloiden tietoja
   - [ ] luoda kategorioita ravintoloista (voi kuulua yhteen tai useampaan ryhmään)
 
 - [x] käyttäjä voi kirjautua ulos järjestelmästä 
