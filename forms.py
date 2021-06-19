@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 
@@ -67,6 +67,8 @@ class NewRestaurantForm(FlaskForm):
     info = StringField("Info",
                        validators=[DataRequired()])
     website = StringField("Website")
+    category = SelectField(u"Category", choices=["",
+                                                 'Breakfest', 'Brunch', 'Cafe', 'Lunch', 'Dinner'])
     submit = SubmitField("Add new restaurant")
 
 
@@ -78,4 +80,6 @@ class UpdateRestaurantForm(FlaskForm):
     info = StringField("Update info",
                        validators=[DataRequired()])
     website = StringField("Update website")
+    category = SelectField(u"Category", choices=["",
+                                                 'Breakfest', 'Brunch', 'Cafe', 'Lunch', 'Dinner'])
     submit = SubmitField("Confirm updates")

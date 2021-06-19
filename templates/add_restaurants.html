@@ -25,6 +25,10 @@
                 {{ form.website.label(class="form-control-label") }}
                 {{ form.website(class="form-control form-control-lg") }}
             </div>
+            <div class="mb-3 form-group">
+                {{ form.category.label(class="form-control-label") }}
+                {{ form.category(class="form-select form-select-lg") }}
+            </div>
         {% if session.user %}
             <div class="mb-3 form-group">
                 {{ form.submit(class="btn btn-outline-info") }}

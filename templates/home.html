@@ -16,16 +16,19 @@
     
     <h2>All restaurants</h2>  
       {% for restaurant in posts %}
-      
+        {% for category in categories %}
+          {% if category.restaurant_id == restaurant.id %}
       <div class="card mb-3">
-          <h4 class="card-header">{{ restaurant.name }}</h4>
+          <h4 class="card-header">{{ restaurant.name }} <span class="badge bg-secondary pull-right">{{ category.category }}</span></h4>
+          {% endif %}
+        {% endfor %}
         <div class="card-body">
           {% if average_review[loop.index0] == None %}
             <h6 class="card-title text-muted">No reviews yet</h6>
             <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }} - added on {{ restaurant.added_at.strftime("%d-%m-%Y") }}</h6>
           
           {% else %}
-          <h6 class="card-title"> Rating: {{ average_review[loop.index0] }} out of 5 ☆'s</h6>
+          <h6 class="card-title"> Rating: {{ average_review[loop.index0] }} out of 5 ☆'s </h6>
           <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }} - added on {{ restaurant.added_at.strftime("%d-%m-%Y") }}</h6>
           {% endif %}
           <p class="card-text">{{ restaurant.info }}</p>

@@ -14,11 +14,12 @@ from services.user_service import user_service
 def home():
 
     restaurants = user_service.find_all_restaurants()
+    categories = user_service.find_all_categories()
 
     if restaurants:
         average_reviews = user_service.average_reviews(restaurants)
 
-        return render_template("home.html", title="Home", posts=restaurants, reviews=average_reviews)
+        return render_template("home.html", title="Home", posts=restaurants, reviews=average_reviews, categories=categories)
 
     return render_template("home.html", title="Home", posts=restaurants, reviews=[])
 
@@ -44,13 +45,14 @@ def new():
             location = form.location.data
             info = form.info.data
             website = form.website.data
+            category = form.category.data
             user_id = user[0]
 
             restaurant_exists = user_service.find_restaurant(name)
 
             if restaurant_exists is False:
                 user_service.add_restaurant(
-                    name, location, info, website, user_id)
+                    name, location, info, website, user_id, category)
                 flash(f"Resturant {name} successfully added", "success")
                 return redirect(url_for("home"))
 
@@ -269,9 +271,10 @@ def update_restaurant(restaurant_id):
             location = form.location.data
             info = form.info.data
             website = form.website.data
+            category = form.category.data
 
             update_restaurant = user_service.update_restaurant(
-                name, location, info, website, restaurant_id)
+                name, location, info, website, restaurant_id, category)
 
             if update_restaurant == True:
                 flash(f"Restaurant information was successfully updated!", "success")

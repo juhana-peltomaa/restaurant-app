@@ -27,3 +27,9 @@ CREATE TABLE reviews (
     restaurant_id INTEGER REFERENCES restaurants ON DELETE CASCADE,
     sent_at TIMESTAMP
 );
+
+CREATE TABLE categories (
+    id SERIAL PRIMARY KEY,
+    category TEXT,
+    restaurant_id INTEGER REFERENCES restaurants
+);
