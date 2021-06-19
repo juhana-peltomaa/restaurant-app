@@ -19,7 +19,7 @@
         {% for category in categories %}
           {% if category.restaurant_id == restaurant.id %}
       <div class="card mb-3">
-          <h4 class="card-header">{{ restaurant.name }} <span class="badge bg-secondary pull-right">{{ category.category }}</span></h4>
+          <h4 class="card-header">{{ restaurant.name }} <span class="badge bg-secondary float-right">{{ category.category }}</span></h4>
           {% endif %}
         {% endfor %}
         <div class="card-body">

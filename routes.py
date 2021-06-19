@@ -53,11 +53,11 @@ def new():
             if restaurant_exists is False:
                 user_service.add_restaurant(
                     name, location, info, website, user_id, category)
-                flash(f"Resturant {name} successfully added", "success")
+                flash(f"Resturant {name} successfully added!", "success")
                 return redirect(url_for("home"))
 
             else:
-                flash(f"Resturant {name} already exists", "danger")
+                flash(f"Resturant {name} already exists!", "danger")
                 return render_template("add_restaurants.html", title="New restaurant", form=form)
 
     return render_template("add_restaurants.html", title="New restaurant", form=form)
