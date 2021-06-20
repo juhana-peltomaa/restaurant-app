@@ -10,6 +10,7 @@ FIND_ALL_CATEGORIES = "SELECT * FROM categories;"
 FIND_CATEGORY_NAME = "SELECT * FROM categories WHERE category=:category;"
 
 REST_AND_CAT = "SELECT * FROM restaurants JOIN categories ON restaurants.id = categories.restaurant_id WHERE categories.category=:category;"
+ALL_REST_AND_CAT = "SELECT * FROM restaurants JOIN categories ON restaurants.id = categories.restaurant_id;"
 
 FIND_RESTAURANT = "SELECT * FROM restaurants WHERE name=:name;"
 FIND_ALL_RESTAURANTS = "SELECT * FROM restaurants;"
@@ -32,10 +33,9 @@ class RestaurantRepository:
         print("Category:", category)
         print("type", type(category))
 
-        if category != '':
-            restaurant_id = restaurant.fetchone()
-            self._db.session.execute(CREATE_NEW_CATEGORY, {
-                                     "category": category, "restaurant_id": restaurant_id[0]})
+        restaurant_id = restaurant.fetchone()
+        self._db.session.execute(CREATE_NEW_CATEGORY, {
+            "category": category, "restaurant_id": restaurant_id[0]})
 
         self._db.session.commit()
         return True
@@ -103,9 +103,6 @@ class RestaurantRepository:
                     "category": category, "restaurant_id": id})
 
         self._db.session.commit()
-
-        print(update_restaurant)
-
         return True
 
     def find_category(self, restaurant_id):
@@ -148,6 +145,19 @@ class RestaurantRepository:
     def rest_and_cat(self, category):
         category_set = self._db.session.execute(
             REST_AND_CAT, {"category": category})
+
+        row_count = category_set.rowcount
+
+        self._db.session.commit()
+
+        if row_count > 0:
+            return category_set.fetchall()
+
+        return False
+
+    def all_rest_and_cat(self):
+        category_set = self._db.session.execute(
+            ALL_REST_AND_CAT)
 
         row_count = category_set.rowcount
 

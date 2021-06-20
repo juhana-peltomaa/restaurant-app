@@ -124,5 +124,10 @@ class UserService:
 
         return category_set
 
+    def all_rest_and_cat(self):
+        category_set = self._rest_repo.all_rest_and_cat()
+
+        return category_set
+
 
 user_service = UserService()

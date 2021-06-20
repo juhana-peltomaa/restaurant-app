@@ -13,13 +13,13 @@ from services.user_service import user_service
 @app.route('/home')  # both take us to the home page
 def home():
 
-    restaurants = user_service.find_all_restaurants()
-    categories = user_service.find_all_categories()
+    #restaurants = user_service.find_all_restaurants()
+    restaurants = user_service.all_rest_and_cat()
 
     if restaurants:
         average_reviews = user_service.average_reviews(restaurants)
 
-        return render_template("home.html", title="Home", posts=restaurants, reviews=average_reviews, categories=categories)
+        return render_template("home.html", title="Home", posts=restaurants, reviews=average_reviews)
 
     return render_template("home.html", title="Home", posts=restaurants, reviews=[])
 

@@ -14,12 +14,14 @@
     
     <h2>All restaurants</h2>  
       {% for restaurant in posts %}
-        {% for category in categories %}
-          {% if category.restaurant_id == restaurant.id %}
-      <div class="card mb-3">
-          <h4 class="card-header">{{ restaurant.name }} <span class="badge bg-secondary pull-right">{{ category.category }}</span></h4>
+        <div class="card mb-3">
+          {% if restaurant.category %}
+          <h4 class="card-header">{{ restaurant.name }} <span class="badge bg-secondary pull-right">{{ restaurant.category }}</span></h4>          
+          {% else %}
+          <h4 class="card-header">{{ restaurant.name }} asd</h4>
           {% endif %}
-        {% endfor %}
+                  
+
         <div class="card-body">
           {% if average_review[loop.index0] == None %}
             <h6 class="card-title text-muted">No reviews yet</h6>
@@ -36,10 +38,10 @@
         </div>
 
             <div class="card-body">
-                <a href={{ url_for('review', id=restaurant.id) }}> <button class="btn btn-primary mb-2" type="button">View / Add Reviews</button></a>
+                <a href={{ url_for('review', id=restaurant.restaurant_id) }}> <button class="btn btn-primary mb-2" type="button">View / Add Reviews</button></a>
                 {% if session.admin == True %} 
-                  <a href={{ url_for('update_restaurant', restaurant_id=restaurant.id)}}> <button class="btn btn-info mb-2" type="button">Update Restaurant</button></a>
-                  <a href={{ url_for('delete', restaurant_id=restaurant.id)}}> <button class="btn btn-danger mb-2" type="button">Delete Restaurant</button></a>
+                  <a href={{ url_for('update_restaurant', restaurant_id=restaurant.restaurant_id)}}> <button class="btn btn-info mb-2" type="button">Update Restaurant</button></a>
+                  <a href={{ url_for('delete', restaurant_id=restaurant.restaurant_id)}}> <button class="btn btn-danger mb-2" type="button">Delete Restaurant</button></a>
                 {% endif %} 
             </div>
       </div>
