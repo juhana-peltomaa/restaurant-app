@@ -24,7 +24,22 @@ def home():
     return render_template("home.html", title="Home", posts=restaurants, reviews=[])
 
 
-@ app.route('/new', methods=['POST', 'GET'])
+@app.route('/category/<category>')
+def category_show(category):
+
+    restaurants = user_service.rest_and_cat(category)
+
+    if restaurants:
+        average_reviews = user_service.average_reviews(restaurants)
+
+        return render_template("category.html", posts=restaurants, reviews=average_reviews, category=category)
+
+    flash(f"No restaurants added to the {category.capitalize()} category yet!",
+          "warning")
+    return redirect("/home")
+
+
+@app.route('/new', methods=['POST', 'GET'])
 def new():
     try:
         if session["admin"] == False:

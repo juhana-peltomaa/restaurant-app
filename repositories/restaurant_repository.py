@@ -5,8 +5,11 @@ from flask_sqlalchemy import SQLAlchemy
 CREATE_NEW_RESTAURANT = "INSERT INTO restaurants (name, location, info, website, user_id, added_at) VALUES (:name, :location, :info, :website, :user_id, NOW()) RETURNING id;"
 
 CREATE_NEW_CATEGORY = "INSERT INTO categories (category, restaurant_id) VALUES (:category, :restaurant_id);"
-FIND_CATEGORY = "SELECT * FROM categories WHERE restaurant_id=:restaurant_id;"
+FIND_RESTAURANT_CATEGORY = "SELECT * FROM categories WHERE restaurant_id=:restaurant_id;"
 FIND_ALL_CATEGORIES = "SELECT * FROM categories;"
+FIND_CATEGORY_NAME = "SELECT * FROM categories WHERE category=:category;"
+
+REST_AND_CAT = "SELECT * FROM restaurants JOIN categories ON restaurants.id = categories.restaurant_id WHERE categories.category=:category;"
 
 FIND_RESTAURANT = "SELECT * FROM restaurants WHERE name=:name;"
 FIND_ALL_RESTAURANTS = "SELECT * FROM restaurants;"
@@ -107,7 +110,7 @@ class RestaurantRepository:
 
     def find_category(self, restaurant_id):
         category_exists = self._db.session.execute(
-            FIND_CATEGORY, {'restaurant_id': restaurant_id})
+            FIND_RESTAURANT_CATEGORY, {'restaurant_id': restaurant_id})
 
         row_count = category_exists.rowcount
 
@@ -126,6 +129,32 @@ class RestaurantRepository:
 
         if row_count > 0:
             return categories.fetchall()
+
+        return False
+
+    def find_category_name(self, category):
+        category_set = self._db.session.execute(
+            FIND_CATEGORY_NAME, {"category": category})
+
+        row_count = category_set.rowcount
+
+        self._db.session.commit()
+
+        if row_count > 0:
+            return category_set.fetchall()
+
+        return False
+
+    def rest_and_cat(self, category):
+        category_set = self._db.session.execute(
+            REST_AND_CAT, {"category": category})
+
+        row_count = category_set.rowcount
+
+        self._db.session.commit()
+
+        if row_count > 0:
+            return category_set.fetchall()
 
         return False
 

@@ -114,4 +114,15 @@ class UserService:
         categories = self._rest_repo.find_all_categories()
         return categories
 
+    def find_category_name(self, category):
+        category_set = self._rest_repo.find_category_name(category)
+
+        return category_set
+
+    def rest_and_cat(self, category):
+        category_set = self._rest_repo.rest_and_cat(category.capitalize())
+
+        return category_set
+
+
 user_service = UserService()

@@ -35,6 +35,20 @@
             <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand" href="/">Home</a>
+        <div class="nav-item dropdown">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                <li><a class="dropdown-item" href={{ url_for('category_show', category="breakfest")}}>Breakfest</a></li>
+                <li><a class="dropdown-item" href={{ url_for('category_show', category="brunch")}}>Brunch</a></li>
+                <li><a class="dropdown-item" href={{ url_for('category_show', category="cafe")}}>Cafe</a></li>
+                <li><a class="dropdown-item" href={{ url_for('category_show', category="lunch")}}>Lunch</a></li>
+                <li><a class="dropdown-item" href={{ url_for('category_show', category="dinner")}}>Dinner</a></li>
+            </ul>
+        </ul>
+        </div>
         {% if session.admin %}
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mb-2 mb-lg-0">

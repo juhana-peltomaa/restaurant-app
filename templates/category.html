@@ -1,0 +1,45 @@
+{% extends "layout.html"%}
+
+{% block content %}
+
+
+<div class="container">
+{% set average_review = reviews %}
+    
+{% if posts %}
+
+<h2>{{category.capitalize()}} restaurants</h2> 
+
+{% for restaurant in posts %}
+        <div class="card mb-3">
+            <h4 class="card-header">{{ restaurant.name }} <span class="badge bg-secondary pull-right">{{ category.capitalize() }}</span></h4>
+        <div class="card-body">
+            {% if average_review[loop.index0] == None %}
+                <h6 class="card-title text-muted">No reviews yet</h6>
+                <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }} - added on {{ restaurant.added_at.strftime("%d-%m-%Y") }}</h6>
+            
+            {% else %}
+            <h6 class="card-title"> Rating: {{ average_review[loop.index0] }} out of 5 ☆'s </h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }} - added on {{ restaurant.added_at.strftime("%d-%m-%Y") }}</h6>
+            {% endif %}
+            <p class="card-text">{{ restaurant.info }}</p>
+            {% if restaurant.website != "" %}
+                <p class="card-text">Website: <a href="http://{{restaurant.website}}" target="_blank">{{restaurant.website}}</a></p>
+            {% endif %}
+            </div>
+
+            <div class="card-body">
+                <a href={{ url_for('review', id=restaurant.restaurant_id) }}> <button class="btn btn-primary mb-2" type="button">View / Add Reviews</button></a>
+                {% if session.admin == True %} 
+                <a href={{ url_for('update_restaurant', restaurant_id=restaurant.restaurant_id)}}> <button class="btn btn-info mb-2" type="button">Update Restaurant</button></a>
+                <a href={{ url_for('delete', restaurant_id=restaurant.restaurant_id)}}> <button class="btn btn-danger mb-2" type="button">Delete Restaurant</button></a>
+                {% endif %} 
+            </div>
+        </div>
+{% endfor %}
+
+{% endif %}
+
+</div>
+
+{% endblock content %}
