@@ -30,9 +30,6 @@ class RestaurantRepository:
         restaurant = self._db.session.execute(
             CREATE_NEW_RESTAURANT, {"name": name, "location": location, "info": info, "website": website, "user_id": user_id})
 
-        print("Category:", category)
-        print("type", type(category))
-
         restaurant_id = restaurant.fetchone()
         self._db.session.execute(CREATE_NEW_CATEGORY, {
             "category": category, "restaurant_id": restaurant_id[0]})

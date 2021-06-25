@@ -38,9 +38,10 @@ class LoginForm(FlaskForm):
 
 
 class ReviewForm(FlaskForm):
-    title = StringField("Review Title", validators=[DataRequired()])
+    title = StringField("Review Title", validators=[
+                        DataRequired(), Length(min=3, max=30)])
     review = StringField("Your review",
-                         validators=[DataRequired()])
+                         validators=[DataRequired(), Length(min=3, max=300)])
 
     stars = RadioField("Rating", choices=[(
         "1", "☆"), ("2", "☆☆"), ("3", "☆☆☆"), ("4", "☆☆☆☆"), ("5", "☆☆☆☆☆")])
@@ -49,9 +50,10 @@ class ReviewForm(FlaskForm):
 
 
 class ReviewFormUpdateMixin(FlaskForm):
-    title = StringField("New review title", validators=[DataRequired()])
+    title = StringField("New review title", validators=[
+                        DataRequired(), Length(min=3, max=30)])
     review = StringField("New review",
-                         validators=[DataRequired()])
+                         validators=[DataRequired(), Length(min=3, max=300)])
 
     stars = RadioField("New rating", choices=[(
         "1", "☆"), ("2", "☆☆"), ("3", "☆☆☆"), ("4", "☆☆☆☆"), ("5", "☆☆☆☆☆")])
@@ -61,11 +63,11 @@ class ReviewFormUpdateMixin(FlaskForm):
 
 class NewRestaurantForm(FlaskForm):
     name = StringField("Restaurant name",
-                       validators=[DataRequired()])
+                       validators=[DataRequired(), Length(min=3, max=30)])
     location = StringField("Location",
-                           validators=[DataRequired()])
+                           validators=[DataRequired(), Length(min=3, max=20)])
     info = StringField("Info",
-                       validators=[DataRequired()])
+                       validators=[DataRequired(), Length(min=3, max=100)])
     website = StringField("Website")
     category = SelectField(u"Category", choices=["",
                                                  'Breakfest', 'Brunch', 'Cafe', 'Lunch', 'Dinner'])
@@ -74,11 +76,11 @@ class NewRestaurantForm(FlaskForm):
 
 class UpdateRestaurantForm(FlaskForm):
     name = StringField("Update restaurant name",
-                       validators=[DataRequired()])
+                       validators=[DataRequired(), Length(min=3, max=30)])
     location = StringField("Update location",
-                           validators=[DataRequired()])
+                           validators=[DataRequired(), Length(min=3, max=20)])
     info = StringField("Update info",
-                       validators=[DataRequired()])
+                       validators=[DataRequired(), Length(min=3, max=100)])
     website = StringField("Update website")
     category = SelectField(u"Category", choices=["",
                                                  'Breakfest', 'Brunch', 'Cafe', 'Lunch', 'Dinner'])

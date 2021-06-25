@@ -34,6 +34,7 @@
             <div class="mb-3 form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
+            {{ form.csrf_token }}
         </form>
             <div class="card-text">
                 <a href={{ url_for('home') }}> <button class="btn btn-primary mb-2" type="button">Back to home page</button></a>

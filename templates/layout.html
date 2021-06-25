@@ -69,8 +69,10 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                         <li><a class="dropdown-item" href="#">Profile</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <form method="POST" action="/logout">
-                        <li><input class="dropdown-item" type="submit" value="Logout"></li>
+                        <form method="GET" action="/logout">
+                            <li>
+                                <input class="dropdown-item" type="submit" value="Logout">
+                            </li>
                         </form>
                     </ul>
                     </li>

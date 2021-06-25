@@ -1,9 +1,10 @@
 from app import app
 # from db import db
-from flask import Flask, render_template, request, url_for, flash, redirect, session
+from flask import Flask, render_template, request, url_for, flash, redirect, session, abort
 from forms import RegistrationForm, LoginForm, ReviewForm, NewRestaurantForm, ReviewFormUpdateMixin, UpdateRestaurantForm
 from werkzeug.security import check_password_hash, generate_password_hash
 from services.user_service import user_service
+from os import urandom
 
 
 # tietokanta alustetaan nyt psql < schema.sql
@@ -66,6 +67,7 @@ def new():
             restaurant_exists = user_service.find_restaurant(name)
 
             if restaurant_exists is False:
+
                 user_service.add_restaurant(
                     name, location, info, website, user_id, category)
                 flash(f"Resturant {name} successfully added!", "success")
@@ -78,7 +80,7 @@ def new():
     return render_template("add_restaurants.html", title="New restaurant", form=form)
 
 
-@ app.route('/login', methods=["GET", "POST"])
+@app.route('/login', methods=["GET", "POST"])
 def login():
     form = LoginForm()
 
@@ -157,7 +159,7 @@ def register():
     return render_template("register.html", title="Register", form=form)
 
 
-@ app.route('/logout', methods=["POST"])
+@ app.route('/logout')
 def logout():
     try:
         del session["user"]
@@ -282,6 +284,7 @@ def update_restaurant(restaurant_id):
     if request.method == "POST":
 
         if form.validate_on_submit():
+
             name = form.name.data
             location = form.location.data
             info = form.info.data

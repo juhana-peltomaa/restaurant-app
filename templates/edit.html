@@ -41,7 +41,7 @@
                     <span class="fa fa-info-circle" aria-hidden="true"> Login to edit reviews</span>
                 </div>
             {% endif %}
-
+            {{ form.csrf_token }}
         </form>
             <div class="card-text">
                 <a href={{ url_for('review', id=restaurant.id) }}> <button class="btn btn-primary mb-2" type="button">Back to reviews</button></a>
