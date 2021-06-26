@@ -23,7 +23,7 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
 ### Ennen kirjautumista
 
 - käyttäjä voi luoda järjestelmään tilin:
-  - [x] uniikin käyttäjätunnuksen ja salasanan tallentaminen tietokantaan 
+  - [x] uniikin käyttäjätunnuksen ja sähköpostin tallentaminen tietokantaan 
   - [x] jos annetut tiedot eivät ole uniikkeja, sovellus ilmoittaa tästä käyttäjälle
 
 - käyttäjä voi kirjautua järjestelmään kirjautumislomakkeella, jos:
