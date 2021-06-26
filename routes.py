@@ -27,10 +27,7 @@ def home():
         if user_id != False:
             favorites = user_service.all_favorites(user_id)
 
-            if favorites:
-                exists = user_service.favorite_exists(user_id)
-
-                return render_template("home.html", title="Home", posts=restaurants, reviews=average_reviews, favorites=favorites, favorites_exist=exists)
+            return render_template("home.html", title="Home", posts=restaurants, reviews=average_reviews, favorites=favorites)
 
         return render_template("home.html", title="Home", posts=restaurants, reviews=average_reviews, favorites=[])
 
@@ -42,10 +39,18 @@ def category_show(category):
 
     restaurants = user_service.rest_and_cat(category)
 
+    try:
+        user_id = session["user_id"]
+    except Exception:
+        user_id = False
+
     if restaurants:
         average_reviews = user_service.average_reviews(restaurants)
 
-        return render_template("category.html", posts=restaurants, reviews=average_reviews, category=category)
+        if user_id != False:
+            favorites = user_service.all_favorites(user_id)
+
+        return render_template("category.html", posts=restaurants, reviews=average_reviews, category=category, favorites=favorites)
 
     flash(f"No restaurants added to the {category.capitalize()} category yet!",
           "warning")
@@ -327,10 +332,10 @@ def favorite_restaurant(restaurant_id):
 
         if favorite == False:
             flash(f"Restaurant is already marked as favorite!", "warning")
-            return redirect(url_for('home'))
+            return redirect(request.referrer)
 
         flash(f"Restaurant marked as favorite!", "success")
-        return redirect(url_for('home'))
+        return redirect(request.referrer)
 
 
 @app.route("/favorite/remove/<int:restaurant_id>")
@@ -345,10 +350,10 @@ def remove_favorite(restaurant_id):
 
     if remove == False:
         flash(f"Restaurant cannot be removed from favorites!", "warning")
-        return redirect(url_for('home'))
+        return redirect(request.referrer)
 
     flash(f"Restaurant was removed from favorites!", "success")
-    return redirect(url_for('home'))
+    return redirect(request.referrer)
 
 
 # @app.route("/profile")

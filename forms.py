@@ -9,7 +9,7 @@ class RegistrationForm(FlaskForm):
     # Length = takes parameters to ensure certain length of username
     # Email = valid email - Equal = compares 2 inputs
     username = StringField("Username",
-                           validators=[DataRequired(), Length(min=2, max=20)])
+                           validators=[DataRequired(), Length(min=2, max=20, message='Username should be between 3 and 20 characters.')])
     email = StringField("Email",
                         validators=[DataRequired(), Email()])
 
@@ -39,9 +39,9 @@ class LoginForm(FlaskForm):
 
 class ReviewForm(FlaskForm):
     title = StringField("Review Title", validators=[
-                        DataRequired(), Length(min=3, max=30)])
+                        DataRequired(), Length(min=3, max=30, message='Review title should be between 3 and 30 characters.')])
     review = StringField("Your review",
-                         validators=[DataRequired(), Length(min=3, max=300)])
+                         validators=[DataRequired(), Length(min=3, max=300, message='Review should be between 3 and 200 characters.')])
 
     stars = RadioField("Rating", choices=[(
         "1", "☆"), ("2", "☆☆"), ("3", "☆☆☆"), ("4", "☆☆☆☆"), ("5", "☆☆☆☆☆")])
@@ -51,9 +51,9 @@ class ReviewForm(FlaskForm):
 
 class ReviewFormUpdateMixin(FlaskForm):
     title = StringField("New review title", validators=[
-                        DataRequired(), Length(min=3, max=30)])
+                        DataRequired(), Length(min=3, max=30, message='Review title should be between 3 and 30 characters.')])
     review = StringField("New review",
-                         validators=[DataRequired(), Length(min=3, max=300)])
+                         validators=[DataRequired(), Length(min=3, max=200, message='Review should be between 3 and 200 characters.')])
 
     stars = RadioField("New rating", choices=[(
         "1", "☆"), ("2", "☆☆"), ("3", "☆☆☆"), ("4", "☆☆☆☆"), ("5", "☆☆☆☆☆")])
@@ -63,25 +63,25 @@ class ReviewFormUpdateMixin(FlaskForm):
 
 class NewRestaurantForm(FlaskForm):
     name = StringField("Restaurant name",
-                       validators=[DataRequired(), Length(min=3, max=30)])
+                       validators=[DataRequired(), Length(min=3, max=30, message='Name should be between 3 and 30 characters.')])
     location = StringField("Location",
-                           validators=[DataRequired(), Length(min=3, max=20)])
+                           validators=[DataRequired(), Length(min=3, max=30, message='Location names should be between 3 and 30 characters.')])
     info = StringField("Info",
-                       validators=[DataRequired(), Length(min=3, max=100)])
+                       validators=[DataRequired(), Length(min=3, max=100, message='Info should be between 3 and 100 characters.')])
     website = StringField("Website")
-    category = SelectField(u"Category", choices=["",
-                                                 'Breakfest', 'Brunch', 'Cafe', 'Lunch', 'Dinner'])
+    category = SelectField(u"Category", choices=[
+                           'Breakfest', 'Brunch', 'Cafe', 'Lunch', 'Dinner', 'Other'])
     submit = SubmitField("Add new restaurant")
 
 
 class UpdateRestaurantForm(FlaskForm):
     name = StringField("Update restaurant name",
-                       validators=[DataRequired(), Length(min=3, max=30)])
+                       validators=[DataRequired(), Length(min=3, max=30, message='Name should be between 3 and 30 characters.')])
     location = StringField("Update location",
-                           validators=[DataRequired(), Length(min=3, max=20)])
+                           validators=[DataRequired(), Length(min=3, max=30, message='Location names should be between 3 and 30 characters.')])
     info = StringField("Update info",
-                       validators=[DataRequired(), Length(min=3, max=100)])
+                       validators=[DataRequired(), Length(min=3, max=100, message='Info should be between 3 and 100 characters.')])
     website = StringField("Update website")
-    category = SelectField(u"Category", choices=["",
-                                                 'Breakfest', 'Brunch', 'Cafe', 'Lunch', 'Dinner'])
+    category = SelectField(u"Category", choices=[
+                           'Breakfest', 'Brunch', 'Cafe', 'Lunch', 'Dinner', 'Other'])
     submit = SubmitField("Confirm updates")

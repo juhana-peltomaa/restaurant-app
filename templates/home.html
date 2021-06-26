@@ -18,13 +18,15 @@
           {% if restaurant.category %}
           <h4 class="card-header">{{ restaurant.name }} 
             <span class="badge bg-secondary pull-right">{{ restaurant.category }}</span>
-           {% for favorite in favorites %}
-             {% if favorite.favorite_restaurant_id == restaurant.category_restaurant_id and favorite.favorite_user_id == session.user_id %}
-              <button type="button" id="Favorite" class="btn btn-warning btn-sm">
-                Favorite <span class="badge bg-warning">☆</span>
-              </button>
-              {% endif %}
-            {% endfor %}
+            {% if favorites %}
+              {% for favorite in favorites %}
+                {% if favorite.favorite_restaurant_id == restaurant.category_restaurant_id and favorite.favorite_user_id == session.user_id %}
+                <button type="button" id="Favorite" class="btn btn-warning btn-sm">
+                  Favorite <span class="badge bg-warning">☆</span>
+                </button>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
           
           </h4>          
           {% else %}

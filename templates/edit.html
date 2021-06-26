@@ -14,11 +14,17 @@
             <div class="mb-3 form-group">
                 {{ form.title.label(class="form-control-label") }}
                 {{ form.title(class="form-control form-control-lg") }}
+                {% if form.title.errors %}
+                    <ul class="errors">{% for error in form.title.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
             </div>
 
             <div class="mb-3 form-group">
                 {{ form.review.label(class="form-control-label") }}
                 {{ form.review(class="form-control form-control-lg") }}
+                {% if form.review.errors %}
+                    <ul class="errors">{% for error in form.review.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
             </div>
             <div class="mb-3 form-group">
                 {{ form.stars.label(class="form-control-label") }}
