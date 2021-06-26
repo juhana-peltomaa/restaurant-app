@@ -43,6 +43,8 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
   - tarkastella ravintolaan liittyviä tietoja:
     - [x] kuvausta
     - [x] kaikki arvostelut
+  - [x] tarkastella ravintoloita kategorioittain  
+  - [x] lisätä ravintolan suosikkilistaan 
   - [ ] etsiä lisättyjä ravintoloita hakusanoilla
   - [ ] listata ravintolat paremmuusjärjestykseen (esim. arvosteluiden perusteella)
 
@@ -50,7 +52,7 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
   - [x] lisätä uusia ravintoloita sovellukseen
   - [x] poistaa olemassa olevia ravintoloita sovelluksesta
   - [x] muokata lisättyjen ravintoloiden tietoja
-  - [ ] luoda kategorioita ravintoloista (voi kuulua yhteen tai useampaan ryhmään)
+  - [x] lisätä ravintolan kategoriaan
 
 - [x] käyttäjä voi kirjautua ulos järjestelmästä 
 
