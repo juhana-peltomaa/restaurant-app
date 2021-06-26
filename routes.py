@@ -14,15 +14,27 @@ from os import urandom
 @app.route('/home')  # both take us to the home page
 def home():
 
-    #restaurants = user_service.find_all_restaurants()
     restaurants = user_service.all_rest_and_cat()
+
+    try:
+        user_id = session["user_id"]
+    except Exception:
+        user_id = False
 
     if restaurants:
         average_reviews = user_service.average_reviews(restaurants)
 
-        return render_template("home.html", title="Home", posts=restaurants, reviews=average_reviews)
+        if user_id != False:
+            favorites = user_service.all_favorites(user_id)
 
-    return render_template("home.html", title="Home", posts=restaurants, reviews=[])
+            if favorites:
+                exists = user_service.favorite_exists(user_id)
+
+                return render_template("home.html", title="Home", posts=restaurants, reviews=average_reviews, favorites=favorites, favorites_exist=exists)
+
+        return render_template("home.html", title="Home", posts=restaurants, reviews=average_reviews, favorites=[])
+
+    return render_template("home.html", title="Home", posts=restaurants, reviews=[], favorites=[])
 
 
 @app.route('/category/<category>')
@@ -302,6 +314,42 @@ def update_restaurant(restaurant_id):
                 return redirect(url_for('update_restaurant', restaurant_id=restaurant_id))
 
     return render_template("update.html", id=id, restaurant_id=restaurant_id, form=form, review=review, restaurant=restaurant)
+
+
+@app.route("/favorite/<int:restaurant_id>")
+def favorite_restaurant(restaurant_id):
+
+    restaurant = user_service.find_restaurant_id(restaurant_id)
+    user_id = session["user_id"]
+
+    if restaurant:
+        favorite = user_service.add_favorite_restaurant(user_id, restaurant_id)
+
+        if favorite == False:
+            flash(f"Restaurant is already marked as favorite!", "warning")
+            return redirect(url_for('home'))
+
+        flash(f"Restaurant marked as favorite!", "success")
+        return redirect(url_for('home'))
+
+
+@app.route("/favorite/remove/<int:restaurant_id>")
+def remove_favorite(restaurant_id):
+
+    restaurant = user_service.find_restaurant_id(restaurant_id)
+    user_id = session["user_id"]
+
+    if restaurant:
+        remove = user_service.remove_favorite_restaurant(
+            user_id, restaurant_id)
+
+    if remove == False:
+        flash(f"Restaurant cannot be removed from favorites!", "warning")
+        return redirect(url_for('home'))
+
+    flash(f"Restaurant was removed from favorites!", "success")
+    return redirect(url_for('home'))
+
 
 # @app.route("/profile")
 # def account():

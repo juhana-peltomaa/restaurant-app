@@ -31,5 +31,11 @@ CREATE TABLE reviews (
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
     category TEXT,
-    restaurant_id INTEGER REFERENCES restaurants ON DELETE CASCADE
+    category_restaurant_id INTEGER REFERENCES restaurants ON DELETE CASCADE
+);
+
+CREATE TABLE favorites (
+    id SERIAL PRIMARY KEY,
+    favorite_user_id INTEGER REFERENCES users (id),
+    favorite_restaurant_id INTEGER REFERENCES restaurants (id) ON DELETE CASCADE
 );

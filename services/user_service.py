@@ -125,9 +125,32 @@ class UserService:
         return category_set
 
     def all_rest_and_cat(self):
+
         category_set = self._rest_repo.all_rest_and_cat()
 
         return category_set
+
+    def add_favorite_restaurant(self, user_id, restaurant_id):
+        favorite_resturant = self._rest_repo.add_favorite_restaurant(
+            user_id, restaurant_id)
+
+        print(favorite_resturant)
+
+        return favorite_resturant
+
+    def all_favorites(self, user_id):
+        favorites = self._rest_repo.all_favorites(user_id)
+
+        return favorites
+
+    def remove_favorite_restaurant(self, user_id, restaurant_id):
+
+        remove = self._rest_repo.remove_favorites(user_id, restaurant_id)
+
+        return remove
+
+    def favorite_exists(self, user_id):
+        exists = self._rest_repo.all_favorites(user_id)
 
 
 user_service = UserService()

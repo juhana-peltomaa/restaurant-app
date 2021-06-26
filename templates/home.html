@@ -16,9 +16,19 @@
       {% for restaurant in posts %}
         <div class="card mb-3">
           {% if restaurant.category %}
-          <h4 class="card-header">{{ restaurant.name }} <span class="badge bg-secondary pull-right">{{ restaurant.category }}</span></h4>          
+          <h4 class="card-header">{{ restaurant.name }} 
+            <span class="badge bg-secondary pull-right">{{ restaurant.category }}</span>
+           {% for favorite in favorites %}
+             {% if favorite.favorite_restaurant_id == restaurant.category_restaurant_id and favorite.favorite_user_id == session.user_id %}
+              <button type="button" id="Favorite" class="btn btn-warning btn-sm">
+                Favorite <span class="badge bg-warning">☆</span>
+              </button>
+              {% endif %}
+            {% endfor %}
+          
+          </h4>          
           {% else %}
-          <h4 class="card-header">{{ restaurant.name }} asd</h4>
+          <h4 class="card-header">{{ restaurant.name }}</h4>
           {% endif %}
                   
 
@@ -38,10 +48,15 @@
         </div>
 
             <div class="card-body">
-                <a href={{ url_for('review', id=restaurant.restaurant_id) }}> <button class="btn btn-primary mb-2" type="button">View / Add Reviews</button></a>
+                <a href={{ url_for('review', id=restaurant.category_restaurant_id) }}> <button class="btn btn-primary mb-2" type="button">View / Add Reviews</button></a>
+                {% if session.user %}
+                    <a href={{ url_for('favorite_restaurant', restaurant_id=restaurant.category_restaurant_id) }}> <button id="Favorite_button" class="btn btn-warning mb-2" type="button">Add to Favorites</button></a>
+
+                    <a href={{ url_for('remove_favorite', restaurant_id=restaurant.category_restaurant_id) }}> <button id="Favorite_button" class="btn btn-danger mb-2" type="button">Remove Favorite</button></a>
+                {% endif %} 
                 {% if session.admin == True %} 
-                  <a href={{ url_for('update_restaurant', restaurant_id=restaurant.restaurant_id)}}> <button class="btn btn-info mb-2" type="button">Update Restaurant</button></a>
-                  <a href={{ url_for('delete', restaurant_id=restaurant.restaurant_id)}}> <button class="btn btn-danger mb-2" type="button">Delete Restaurant</button></a>
+                  <a href={{ url_for('update_restaurant', restaurant_id=restaurant.category_restaurant_id) }}> <button class="btn btn-info mb-2" type="button">Update Restaurant</button></a>
+                  <a href={{ url_for('delete', restaurant_id=restaurant.category_restaurant_id) }}> <button class="btn btn-danger mb-2" type="button">Delete Restaurant</button></a>
                 {% endif %} 
             </div>
       </div>
