@@ -50,7 +50,9 @@ def category_show(category):
         if user_id != False:
             favorites = user_service.all_favorites(user_id)
 
-        return render_template("category.html", posts=restaurants, reviews=average_reviews, category=category, favorites=favorites)
+            return render_template("category.html", posts=restaurants, reviews=average_reviews, category=category, favorites=favorites)
+
+        return render_template("category.html", posts=restaurants, reviews=average_reviews, category=category, favorites=[])
 
     flash(f"No restaurants added to the {category.capitalize()} category yet!",
           "warning")
