@@ -2,11 +2,13 @@
 
 Sovelluksen nykytila löytyy täältä: https://tsoha-restaurants.herokuapp.com
 
-Sovelluksen testaamista varten voi luoda uuden käyttäjän tai käyttää valmiiksi luotua _normaalikäyttäjää_
- - Käyttäjätunnus: **test@test.fi**
+Sovelluksen testaamista varten voi luoda uuden käyttäjän tai käyttää valmiiksi luotua _normaali_ käyttäjää:
+ - Käyttäjätunnus: **test<span>@</span>test.fi**
  - Salasana: **test**
-tai _ylläpitäjä_ toiminnallisuuksilla olevaa käyttäjää
- - Käyttäjätunnus: **admin@admin.fi**
+ 
+tai _ylläpitäjä_ toiminnallisuuksilla olevaa käyttäjää:
+
+ - Käyttäjätunnus: **admin<span>@</span>admin.fi**
  - Salasana: **admin**
 
 Tällä hetkellä sovelluksessa olevat toiminnallisuudet näkyvillä listauksessa alla.
