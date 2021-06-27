@@ -26,7 +26,6 @@ class ReviewRepository:
         rowcount = new_review.rowcount
 
         if rowcount > 0:
-            # Palauttaa RETURNING komennon kautta id:n ja user_id:n
             return new_review
 
         return None
@@ -63,7 +62,6 @@ class ReviewRepository:
 
         self._db.session.commit()
 
-        # DRY ongelmaa tässä, mieti järkevämpi tapa tsekata, että SQL komennot menee läpi
         rowcount = review_writer.rowcount
 
         self._db.session.commit()

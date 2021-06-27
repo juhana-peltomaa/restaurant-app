@@ -59,7 +59,7 @@
                 </li>
             </ul>
             </div>
-            <!-- näytetään alla olevaa, jos käyttäjä on kirjautnut sisään - Logout toimii nyt myös -->
+            <!-- display if user is logged in -->
         {% endif %}
             {% if session.user %}
                 <div class="justify-content-end">
@@ -85,7 +85,7 @@
         <div class="col-md">
             <p>You are logged in as: <b>{{ session.user }}</b></p>
             
-        <!-- Jos käyttäjä ei ole kirjautnut sisään, voi katsoa ravintoloita ja näkee login / reksteröitymislomakkeet -->
+        <!-- if user is not logged in, can still view restaurants and register -->
             {% else %}
                 <div class="justify-content-end">
                 <ul class="navbar-nav mb-2 mb-lg-0">
@@ -122,12 +122,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
     
-    <!-- <script type = "text/javascript">
-        function change()
-        {
-            document.getElementById("Favorite_button").innerHTML = 'my text'
-        }
-    </script> -->
 
 </body>
 </html>

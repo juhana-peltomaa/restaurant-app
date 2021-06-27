@@ -7,11 +7,8 @@ from services.user_service import user_service
 from os import urandom
 
 
-# tietokanta alustetaan nyt psql < schema.sql
-
-
 @app.route('/')
-@app.route('/home')  # both take us to the home page
+@app.route('/home')
 def home():
 
     restaurants = user_service.all_rest_and_cat()
@@ -386,4 +383,4 @@ def account():
 
         return render_template("user_profile.html", user=user_info, posts=[], reviews=[], favorites=[])
 
-    return render_template("user_profile.html", posts=restaurants, reviews=[], favorites=[])
+    return render_template("user_profile.html", posts=[], reviews=[], favorites=[])
