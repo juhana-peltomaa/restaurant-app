@@ -2,6 +2,13 @@
 
 Sovelluksen nykytila löytyy täältä: https://tsoha-restaurants.herokuapp.com
 
+Sovelluksen testaamista varten voi luoda uuden käyttäjän tai käyttää valmiiksi luotua _normaalikäyttäjää_
+ - Käyttäjätunnus: **test@test.fi**
+ - Salasana: **test**
+tai _ylläpitäjä_ toiminnallisuuksilla olevaa käyttäjää
+ - Käyttäjätunnus: **admin@admin.fi**
+ - Salasana: **admin**
+
 Tällä hetkellä sovelluksessa olevat toiminnallisuudet näkyvillä listauksessa alla.
 
 ## Vaatimusmäärittely
@@ -11,8 +18,6 @@ Tällä hetkellä sovelluksessa olevat toiminnallisuudet näkyvillä listauksess
 Sovellukseen voidaan lisätä ravintoloita, arvosteluja sekä tarkastella ravintoloiden tietoja. 
 
 Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä. Ylläpitäjä voi lisätä uusia sekä poistaa olemassa olevia ravintoloita sovelluksesta. Käyttäjät voivat lisätä arvosteluita sovelluksessa olevien ravintoloiden tietoihin.
-
-Käyttäjä voi myös halutessaan poistaa kaikki tietonsa sovelluksesta. 
 
 ## Käyttäjät
 
@@ -45,8 +50,9 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
     - [x] kaikki arvostelut
   - [x] tarkastella ravintoloita kategorioittain  
   - [x] lisätä ravintolan suosikkilistaan 
-  - [ ] etsiä lisättyjä ravintoloita hakusanoilla
-  - [ ] listata ravintolat paremmuusjärjestykseen (esim. arvosteluiden perusteella)
+  - tarkastella profiiliaan, jossa
+    - [x] näkee käyttäjän perustiedot (sähköposti ja käyttäjätunnus)
+    - [x] kaikki lempiravintolansa 
 
 - kirjautunut _ylläpitäjä_ voi (ylläolevan lisäksi):
   - [x] lisätä uusia ravintoloita sovellukseen
@@ -56,9 +62,12 @@ Sovelluksella kaksi käyttäjäroolia ns. _normaali käyttäjä_ tai _ylläpitä
 
 - [x] käyttäjä voi kirjautua ulos järjestelmästä 
 
-- [ ] käyttäjä voi poistaa kaikki tietonsa (käyttäjän poistaminen)
-
 ## Jatkokehitysideoita
 
 - Ravintoloiden listaaminen kartalla
 - Käyttäjän profiilin muokkaaminen / kuvan lisääminen
+- Etsiä lisättyjä ravintoloita hakusanoilla
+- Listata ravintolat paremmuusjärjestykseen (esim. arvosteluiden perusteella)
+- Käyttäjän toimintoihin liittyvää statistiikkaa (lisättyjen arvosteluiden määrät, keskiarvot yms)
+- Käyttäjä voi poistaa kaikki tietonsa (käyttäjän poistaminen)
+
