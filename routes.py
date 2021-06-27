@@ -211,8 +211,6 @@ def review(id):
             stars = form.stars.data
             writer = session["user"]
             user_id = session["user_id"]
-
-            # nykyisen ravintolan id
             restaurant_id = id
 
             review = user_service.create_review(
@@ -220,7 +218,6 @@ def review(id):
 
             review = review.first()
 
-            # Hakee arvostelut, jotta myös uusin näkyy review.html -sivulla
             if review is not None:
                 reviews = user_service.all_reviews(id)
 
@@ -358,7 +355,21 @@ def remove_favorite(restaurant_id):
     return redirect(request.referrer)
 
 
-# @app.route("/profile")
-# def account():
-#     image = url_for("static", filename="profile_picture/" + current_user.picture)
-#     return render_template("user_profile.html")
+@app.route("/profile")
+def account():
+
+    try:
+        if session["user"] == False:
+            flash(f"Access restricted! Login to view your profile.", "danger")
+            return redirect(url_for("home"))
+    except KeyError:
+        flash(f"Access restricted! Login to view your profile.", "danger")
+        return redirect(url_for("home"))
+
+    user_info = user_service.find_user(session["user"])
+
+    if user_info:
+
+        return render_template("user_profile.html", user=user_info)
+
+    return render_template("user_profile.html")
