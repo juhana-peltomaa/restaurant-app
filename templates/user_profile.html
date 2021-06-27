@@ -11,6 +11,58 @@
     </div>
 </div>
 
+<h2>Your favorite restaurants:</h2>  
+
+{% if posts %}
+      {% for restaurant in posts %}
+        <div class="card mb-3">
+          {% if restaurant.category %}
+          <h4 class="card-header">{{ restaurant.name }} 
+            <span class="badge bg-secondary pull-right">{{ restaurant.category }}</span>
+            {% if favorites %}
+              {% for favorite in favorites %}
+                {% if favorite.favorite_restaurant_id == restaurant.category_restaurant_id and favorite.favorite_user_id == session.user_id %}
+                <button type="button" id="Favorite" class="btn btn-warning btn-sm">
+                  Favorite <span class="badge bg-warning">☆</span>
+                </button>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          
+          </h4>          
+          {% else %}
+          <h4 class="card-header">{{ restaurant.name }}</h4>
+          {% endif %}
+                  
+
+        <div class="card-body">
+          {% if reviews[loop.index0] == None %}
+            <h6 class="card-title text-muted">No reviews yet</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }} - added on {{ restaurant.added_at.strftime("%d-%m-%Y") }}</h6>
+          
+          {% else %}
+          <h6 class="card-title"> Rating: {{ reviews[loop.index0] }} out of 5 ☆'s </h6>
+          <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }} - added on {{ restaurant.added_at.strftime("%d-%m-%Y") }}</h6>
+          {% endif %}
+          <p class="card-text">{{ restaurant.info }}</p>
+          {% if restaurant.website != "" %}
+            <p class="card-text">Website: <a href="http://{{restaurant.website}}" target="_blank">{{restaurant.website}}</a></p>
+          {% endif %}
+        </div>
+</div>
+    {% endfor %}
+      
+    {% else %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">No favorites added yet!</h5>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+    
+</div>
+
 
 
 {% endblock content %}

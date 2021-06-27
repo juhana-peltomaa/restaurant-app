@@ -357,7 +357,6 @@ def remove_favorite(restaurant_id):
 
 @app.route("/profile")
 def account():
-
     try:
         if session["user"] == False:
             flash(f"Access restricted! Login to view your profile.", "danger")
@@ -368,8 +367,23 @@ def account():
 
     user_info = user_service.find_user(session["user"])
 
+    restaurants = user_service.all_rest_and_cat()
+
     if user_info:
+        try:
+            user_id = session["user_id"]
+        except Exception:
+            user_id = False
 
-        return render_template("user_profile.html", user=user_info)
+        if restaurants:
+            average_reviews = user_service.average_reviews(restaurants)
 
-    return render_template("user_profile.html")
+            if user_id != False:
+                favorites = user_service.all_favorites(user_id)
+
+            if favorites:
+                return render_template("user_profile.html", user=user_info, posts=restaurants, reviews=average_reviews, favorites=favorites)
+
+        return render_template("user_profile.html", user=user_info, posts=[], reviews=[], favorites=[])
+
+    return render_template("user_profile.html", posts=restaurants, reviews=[], favorites=[])
